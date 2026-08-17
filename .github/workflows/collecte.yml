@@ -92,7 +92,11 @@ jobs:
         run: |
           git config user.name "collecte"
           git config user.email "collecte@users.noreply.github.com"
-          git add compteurs referentiel.csv journal.csv
+          # `add -A` et non une liste de chemins : au premier passage, aucun
+          # compteur n'est encore écrit et git ne suit pas les dossiers vides,
+          # si bien qu'un `add compteurs` échouait en « pathspec did not match ».
+          # Le .gitignore fait le tri, notamment sur etat/ qui vit en release.
+          git add -A
           # Une journée sautée ou rejouée ne touche pas les compteurs : il n'y a
           # alors rien à verser, et ce n'est pas une erreur.
           git diff --staged --quiet && { echo "rien de neuf"; exit 0; }
