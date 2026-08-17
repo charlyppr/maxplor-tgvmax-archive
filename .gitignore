@@ -8,7 +8,9 @@ etat/
 
 # Relevés fabriqués pour la mise au point du comptage, et copies datées des
 # états, qui vivent en release asset et non dans git.
-jour*.csv
+# Le chiffre est indispensable : « jour*.csv » avalait aussi journal.csv, qui
+# est la seule observabilité de l'archive.
+jour[0-9]*.csv
 perturbe.csv
 snap.csv
 tronque.csv
