@@ -1,0 +1,100 @@
+name: collecte
+
+# Le portail rafraîchit le jeu « tgvmax » chaque matin à 04 h 24 UTC — mesuré,
+# à la seconde près, sur plusieurs jours. On passe une heure après pour laisser
+# de la marge, et le cron d'Actions est de toute façon approximatif.
+#
+# Le rendez-vous est quotidien et sans rattrapage possible : une journée manquée
+# est une journée d'histoire perdue pour toujours. D'où les deux garde-fous du
+# script — il refuse de compter deux fois le même snapshot, et il saute le
+# comptage plutôt que de mélanger deux journées en une quand un trou s'est
+# produit.
+on:
+  schedule:
+    - cron: "30 5 * * *"
+  workflow_dispatch:
+
+# Le commit quotidien a un effet de bord utile : GitHub désactive les workflows
+# planifiés d'un dépôt resté soixante jours sans activité. Tant que la collecte
+# écrit, elle se maintient elle-même en vie.
+permissions:
+  contents: write
+
+concurrency:
+  group: collecte
+  cancel-in-progress: false
+
+jobs:
+  collecte:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prépare la réserve d'états
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Une release sert de stockage binaire : l'état pèse 2 Mo, il est
+          # réécrit en entier chaque jour, et du gzip ne se delta pas. Le mettre
+          # dans git coûterait près d'un gigaoctet par an d'historique.
+          gh release view etat >/dev/null 2>&1 || \
+            gh release create etat \
+              --title "Réserve d'états" \
+              --notes "État du dernier snapshot, et les trente derniers pour pouvoir recalculer. Données SNCF Voyageurs, ODbL."
+
+      - name: Récupère l'état de la veille
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p etat
+          if gh release download etat --pattern precedent.csv.gz --dir etat --clobber; then
+            echo "état de la veille récupéré"
+          else
+            echo "pas d'état en réserve : ce sera une amorce"
+          fi
+
+      - name: Collecte
+        run: python3 collecte.py
+
+      - name: Publie l'état du jour
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          JOUR=$(date -u +%F)
+          # Deux copies, deux usages : `precedent` est le pointeur que demain
+          # ira chercher, la copie datée est la mémoire qui permet de tout
+          # recalculer si l'on ajoute une dimension aux compteurs.
+          cp etat/precedent.csv.gz "etat-$JOUR.csv.gz"
+          gh release upload etat etat/precedent.csv.gz --clobber
+          gh release upload etat "etat-$JOUR.csv.gz" --clobber
+
+      - name: Élague les états de plus de soixante jours
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Soixante jours et non trente : valider la composition du modèle
+          # demande de comparer une survie prédite à une survie réellement
+          # observée sur une fenêtre complète, donc d'avoir en réserve plus d'un
+          # cycle de trente et un jours. À 2 Mo par état, la réserve tient dans
+          # les 120 Mo — rien, pour la seule chose qu'on ne peut pas réobserver.
+          LIMITE=$(date -u -d '60 days ago' +%F)
+          gh release view etat --json assets --jq '.assets[].name' \
+            | grep -E '^etat-[0-9]{4}-[0-9]{2}-[0-9]{2}\.csv\.gz$' \
+            | while read -r nom; do
+                jour="${nom#etat-}"; jour="${jour%.csv.gz}"
+                if [[ "$jour" < "$LIMITE" ]]; then
+                  echo "élagage de $nom"
+                  gh release delete-asset etat "$nom" --yes
+                fi
+              done
+
+      - name: Verse les compteurs
+        run: |
+          git config user.name "collecte"
+          git config user.email "collecte@users.noreply.github.com"
+          git add compteurs referentiel.csv journal.csv
+          # Une journée sautée ou rejouée ne touche pas les compteurs : il n'y a
+          # alors rien à verser, et ce n'est pas une erreur.
+          git diff --staged --quiet && { echo "rien de neuf"; exit 0; }
+          git commit -m "Compte les passages du $(date -u +%F)"
+          git push

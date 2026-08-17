@@ -1,0 +1,15 @@
+# L'état de la veille vit en release asset : 2 Mo réécrits chaque jour, et du
+# gzip ne se delta pas. Dans git, l'historique aurait pris près d'un gigaoctet
+# par an pour une information dont seule la dernière version sert.
+etat/
+
+# Écritures atomiques en cours.
+*.tmp
+
+# Relevés fabriqués pour la mise au point du comptage, et copies datées des
+# états, qui vivent en release asset et non dans git.
+jour*.csv
+perturbe.csv
+snap.csv
+tronque.csv
+etat-*.csv.gz

@@ -1,0 +1,36 @@
+Open Database License (ODbL) v1.0
+=================================
+
+Base de données source
+----------------------
+
+Jeu de données « tgvmax », publié par **SNCF Voyageurs** sur data.sncf.com,
+sous Open Database License (ODbL) v1.0.
+
+  https://data.sncf.com/explore/dataset/tgvmax/
+  https://data.sncf.com/pages/cgu/A1#A1
+
+
+Base de données dérivée
+-----------------------
+
+Les compteurs, le référentiel et les modèles contenus dans ce dépôt
+constituent une base de données dérivée du jeu ci-dessus. En application de la
+clause de partage à l'identique de l'ODbL, ils sont distribués sous cette même
+licence, avec attribution à SNCF Voyageurs.
+
+Toute redistribution de ces données, ou de toute base qui en dérive, doit :
+
+  - attribuer la source à SNCF Voyageurs ;
+  - rester sous Open Database License v1.0 ;
+  - laisser disponible une version ouverte de la base, si une version
+    techniquement restreinte en est distribuée.
+
+Le code de ce dépôt (collecte.py, workflows) n'est pas une base de données et
+n'est pas couvert par l'ODbL.
+
+
+Texte complet de la licence
+---------------------------
+
+  https://opendatacommons.org/licenses/odbl/1-0/
