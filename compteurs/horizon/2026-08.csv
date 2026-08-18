@@ -1,0 +1,841 @@
+axe,horizon,pointe,n_ouvert,ferme,n_ferme,rouvre
+ATLANTIQUE,1,creuse,709,66,248,44
+ATLANTIQUE,1,pointe,969,57,332,24
+ATLANTIQUE,2,creuse,694,30,262,51
+ATLANTIQUE,2,pointe,1028,55,274,51
+ATLANTIQUE,3,creuse,704,93,252,42
+ATLANTIQUE,3,pointe,891,106,411,63
+ATLANTIQUE,4,creuse,251,0,895,375
+ATLANTIQUE,4,pointe,341,0,1126,442
+ATLANTIQUE,5,creuse,180,12,860,45
+ATLANTIQUE,5,pointe,235,9,955,52
+ATLANTIQUE,6,creuse,264,24,762,57
+ATLANTIQUE,6,pointe,269,18,962,39
+ATLANTIQUE,7,creuse,258,0,720,53
+ATLANTIQUE,7,pointe,452,30,912,127
+ATLANTIQUE,8,creuse,313,0,648,28
+ATLANTIQUE,8,pointe,536,0,818,96
+ATLANTIQUE,9,creuse,248,1,712,41
+ATLANTIQUE,9,pointe,416,9,939,33
+ATLANTIQUE,10,creuse,201,1,751,6
+ATLANTIQUE,10,pointe,359,0,978,32
+ATLANTIQUE,11,creuse,164,16,1017,34
+ATLANTIQUE,11,pointe,297,13,1210,43
+ATLANTIQUE,12,creuse,111,0,936,74
+ATLANTIQUE,12,pointe,145,0,1049,118
+ATLANTIQUE,13,creuse,165,0,864,23
+ATLANTIQUE,13,pointe,188,0,1033,23
+ATLANTIQUE,14,creuse,100,3,741,20
+ATLANTIQUE,14,pointe,237,17,966,26
+ATLANTIQUE,15,creuse,133,3,700,42
+ATLANTIQUE,15,pointe,255,0,967,55
+ATLANTIQUE,16,creuse,152,0,682,13
+ATLANTIQUE,16,pointe,271,0,954,21
+ATLANTIQUE,17,creuse,102,0,732,3
+ATLANTIQUE,17,pointe,138,0,1086,20
+ATLANTIQUE,18,creuse,38,0,969,3
+ATLANTIQUE,18,pointe,133,0,1263,9
+ATLANTIQUE,19,creuse,35,0,825,0
+ATLANTIQUE,19,pointe,121,0,780,0
+ATLANTIQUE,20,creuse,56,0,916,2
+ATLANTIQUE,20,pointe,63,0,1092,1
+ATLANTIQUE,21,creuse,64,0,760,10
+ATLANTIQUE,21,pointe,158,0,1053,0
+ATLANTIQUE,22,creuse,108,0,714,5
+ATLANTIQUE,22,pointe,213,0,1020,8
+ATLANTIQUE,23,creuse,88,0,734,4
+ATLANTIQUE,23,pointe,226,0,1007,36
+ATLANTIQUE,24,creuse,106,0,721,2
+ATLANTIQUE,24,pointe,157,5,1075,4
+ATLANTIQUE,25,creuse,63,0,942,5
+ATLANTIQUE,25,pointe,78,0,1318,13
+ATLANTIQUE,26,creuse,63,3,825,8
+ATLANTIQUE,26,pointe,150,0,778,0
+ATLANTIQUE,27,creuse,51,0,921,3
+ATLANTIQUE,27,pointe,69,0,1086,0
+ATLANTIQUE,28,creuse,67,0,665,0
+ATLANTIQUE,28,pointe,114,0,1084,0
+ATLANTIQUE,29,creuse,89,0,641,0
+ATLANTIQUE,29,pointe,178,3,1042,0
+ATLANTIQUE,30,creuse,0,0,726,89
+ATLANTIQUE,30,pointe,0,0,1212,180
+AUTOCAR SNCF,1,creuse,0,0,346,0
+AUTOCAR SNCF,1,pointe,0,0,349,0
+AUTOCAR SNCF,2,creuse,0,0,347,0
+AUTOCAR SNCF,2,pointe,0,0,349,0
+AUTOCAR SNCF,3,creuse,0,0,347,0
+AUTOCAR SNCF,3,pointe,0,0,349,0
+AUTOCAR SNCF,4,creuse,0,0,292,0
+AUTOCAR SNCF,4,pointe,0,0,341,0
+AUTOCAR SNCF,5,creuse,0,0,294,0
+AUTOCAR SNCF,5,pointe,0,0,329,0
+AUTOCAR SNCF,6,creuse,0,0,307,0
+AUTOCAR SNCF,6,pointe,0,0,303,0
+AUTOCAR SNCF,7,creuse,0,0,363,0
+AUTOCAR SNCF,7,pointe,0,0,345,0
+AUTOCAR SNCF,8,creuse,0,0,354,0
+AUTOCAR SNCF,8,pointe,0,0,345,0
+AUTOCAR SNCF,9,creuse,0,0,354,0
+AUTOCAR SNCF,9,pointe,0,0,345,0
+AUTOCAR SNCF,10,creuse,0,0,354,0
+AUTOCAR SNCF,10,pointe,0,0,345,0
+AUTOCAR SNCF,11,creuse,0,0,304,0
+AUTOCAR SNCF,11,pointe,0,0,348,0
+AUTOCAR SNCF,12,creuse,0,0,177,0
+AUTOCAR SNCF,12,pointe,0,0,252,0
+AUTOCAR SNCF,13,creuse,0,0,153,0
+AUTOCAR SNCF,13,pointe,0,0,229,0
+AUTOCAR SNCF,14,creuse,0,0,177,0
+AUTOCAR SNCF,14,pointe,0,0,272,0
+AUTOCAR SNCF,15,creuse,0,0,175,0
+AUTOCAR SNCF,15,pointe,0,0,272,0
+AUTOCAR SNCF,16,creuse,0,0,175,0
+AUTOCAR SNCF,16,pointe,0,0,272,0
+AUTOCAR SNCF,17,creuse,0,0,175,0
+AUTOCAR SNCF,17,pointe,0,0,272,0
+AUTOCAR SNCF,18,creuse,0,0,176,0
+AUTOCAR SNCF,18,pointe,0,0,273,0
+AUTOCAR SNCF,19,creuse,0,0,186,0
+AUTOCAR SNCF,19,pointe,0,0,261,0
+AUTOCAR SNCF,20,creuse,0,0,150,0
+AUTOCAR SNCF,20,pointe,0,0,226,0
+AUTOCAR SNCF,21,creuse,0,0,179,0
+AUTOCAR SNCF,21,pointe,0,0,272,0
+AUTOCAR SNCF,22,creuse,0,0,177,0
+AUTOCAR SNCF,22,pointe,0,0,272,0
+AUTOCAR SNCF,23,creuse,0,0,177,0
+AUTOCAR SNCF,23,pointe,0,0,272,0
+AUTOCAR SNCF,24,creuse,0,0,177,0
+AUTOCAR SNCF,24,pointe,0,0,272,0
+AUTOCAR SNCF,25,creuse,0,0,178,0
+AUTOCAR SNCF,25,pointe,0,0,273,0
+AUTOCAR SNCF,26,creuse,0,0,186,0
+AUTOCAR SNCF,26,pointe,0,0,261,0
+AUTOCAR SNCF,27,creuse,0,0,150,0
+AUTOCAR SNCF,27,pointe,0,0,226,0
+AUTOCAR SNCF,28,creuse,0,0,185,0
+AUTOCAR SNCF,28,pointe,0,0,272,0
+AUTOCAR SNCF,29,creuse,0,0,183,0
+AUTOCAR SNCF,29,pointe,0,0,272,0
+AUTOCAR SNCF,30,creuse,0,0,183,0
+AUTOCAR SNCF,30,pointe,0,0,272,0
+EST,1,creuse,535,17,256,4
+EST,1,pointe,557,41,547,20
+EST,2,creuse,443,38,313,72
+EST,2,pointe,589,11,505,34
+EST,3,creuse,507,4,298,9
+EST,3,pointe,486,9,618,21
+EST,4,creuse,42,0,826,207
+EST,4,pointe,158,1,1070,323
+EST,5,creuse,120,29,950,23
+EST,5,pointe,207,28,1086,13
+EST,6,creuse,58,8,966,7
+EST,6,pointe,110,7,1238,21
+EST,7,creuse,36,0,824,7
+EST,7,pointe,113,4,1134,7
+EST,8,creuse,114,28,676,0
+EST,8,pointe,204,32,949,2
+EST,9,creuse,66,11,724,59
+EST,9,pointe,166,9,987,45
+EST,10,creuse,76,17,763,12
+EST,10,pointe,121,0,1042,20
+EST,11,creuse,24,4,872,6
+EST,11,pointe,132,38,1127,6
+EST,12,creuse,8,0,1056,199
+EST,12,pointe,39,0,1263,188
+EST,13,creuse,19,0,940,6
+EST,13,pointe,52,0,1307,16
+EST,14,creuse,3,0,769,4
+EST,14,pointe,52,0,1075,13
+EST,15,creuse,54,2,655,8
+EST,15,pointe,160,0,849,13
+EST,16,creuse,72,9,644,13
+EST,16,pointe,158,0,854,5
+EST,17,creuse,55,0,662,1
+EST,17,pointe,88,0,930,7
+EST,18,creuse,48,7,753,2
+EST,18,pointe,98,11,1088,6
+EST,19,creuse,4,0,796,3
+EST,19,pointe,56,0,1058,3
+EST,20,creuse,8,0,872,0
+EST,20,pointe,28,0,1114,0
+EST,21,creuse,24,3,738,0
+EST,21,pointe,97,3,1005,0
+EST,22,creuse,38,6,678,0
+EST,22,pointe,96,0,915,0
+EST,23,creuse,24,0,692,0
+EST,23,pointe,85,0,927,0
+EST,24,creuse,56,0,661,1
+EST,24,pointe,73,0,945,2
+EST,25,creuse,33,22,768,5
+EST,25,pointe,54,5,1132,13
+EST,26,creuse,17,0,775,0
+EST,26,pointe,82,0,1024,0
+EST,27,creuse,4,0,875,1
+EST,27,pointe,14,0,1129,2
+EST,28,creuse,18,0,749,0
+EST,28,pointe,60,6,1045,3
+EST,29,creuse,34,0,687,27
+EST,29,pointe,77,1,937,15
+EST,30,creuse,0,0,714,28
+EST,30,pointe,0,0,1013,65
+IC ARO,1,creuse,165,27,617,46
+IC ARO,1,pointe,203,55,775,33
+IC ARO,2,creuse,119,0,676,19
+IC ARO,2,pointe,272,0,706,7
+IC ARO,3,creuse,147,21,648,15
+IC ARO,3,pointe,230,33,748,16
+IC ARO,4,creuse,25,4,797,30
+IC ARO,4,pointe,32,0,964,78
+IC ARO,5,creuse,14,0,744,0
+IC ARO,5,pointe,33,0,876,0
+IC ARO,6,creuse,15,0,767,0
+IC ARO,6,pointe,22,0,791,0
+IC ARO,7,creuse,38,0,757,0
+IC ARO,7,pointe,75,0,903,0
+IC ARO,8,creuse,63,0,732,0
+IC ARO,8,pointe,205,0,773,0
+IC ARO,9,creuse,52,0,743,2
+IC ARO,9,pointe,180,0,798,14
+IC ARO,10,creuse,29,0,766,6
+IC ARO,10,pointe,101,0,877,15
+IC ARO,11,creuse,18,0,804,0
+IC ARO,11,pointe,44,0,952,6
+IC ARO,12,creuse,2,0,756,23
+IC ARO,12,pointe,10,0,899,58
+IC ARO,13,creuse,13,6,769,3
+IC ARO,13,pointe,33,20,780,3
+IC ARO,14,creuse,37,0,760,0
+IC ARO,14,pointe,84,0,894,0
+IC ARO,15,creuse,63,0,738,6
+IC ARO,15,pointe,221,2,753,37
+IC ARO,16,creuse,194,0,607,10
+IC ARO,16,pointe,360,0,614,5
+IC ARO,17,creuse,93,0,708,10
+IC ARO,17,pointe,269,0,705,35
+IC ARO,18,creuse,12,0,812,0
+IC ARO,18,pointe,60,0,936,0
+IC ARO,19,creuse,61,3,701,0
+IC ARO,19,pointe,172,33,733,0
+IC ARO,20,creuse,6,0,758,0
+IC ARO,20,pointe,22,0,779,0
+IC ARO,21,creuse,69,15,728,0
+IC ARO,21,pointe,212,40,766,0
+IC ARO,22,creuse,78,0,719,0
+IC ARO,22,pointe,304,0,674,0
+IC ARO,23,creuse,107,0,690,0
+IC ARO,23,pointe,318,0,660,0
+IC ARO,24,creuse,101,0,696,0
+IC ARO,24,pointe,199,0,779,41
+IC ARO,25,creuse,19,0,805,0
+IC ARO,25,pointe,60,0,936,0
+IC ARO,26,creuse,30,0,732,0
+IC ARO,26,pointe,139,0,766,0
+IC ARO,27,creuse,1,0,763,6
+IC ARO,27,pointe,5,0,796,22
+IC ARO,28,creuse,23,0,762,0
+IC ARO,28,pointe,113,0,829,0
+IC ARO,29,creuse,71,0,716,10
+IC ARO,29,pointe,246,0,694,35
+IC ARO,30,creuse,0,0,794,331
+IC ARO,30,pointe,0,0,933,624
+IC NUIT,1,creuse,45,0,56,42
+IC NUIT,1,pointe,42,0,51,27
+IC NUIT,2,creuse,60,0,49,5
+IC NUIT,2,pointe,58,0,35,0
+IC NUIT,3,creuse,45,0,64,8
+IC NUIT,3,pointe,30,0,63,0
+IC NUIT,4,creuse,0,0,109,4
+IC NUIT,4,pointe,0,0,97,0
+IC NUIT,5,creuse,0,0,117,0
+IC NUIT,5,pointe,0,0,91,0
+IC NUIT,6,creuse,0,0,108,0
+IC NUIT,6,pointe,0,0,95,0
+IC NUIT,7,creuse,41,0,68,0
+IC NUIT,7,pointe,30,0,63,0
+IC NUIT,8,creuse,41,7,68,0
+IC NUIT,8,pointe,30,0,63,0
+IC NUIT,9,creuse,34,0,75,0
+IC NUIT,9,pointe,30,0,63,0
+IC NUIT,10,creuse,22,0,87,0
+IC NUIT,10,pointe,20,0,73,0
+IC NUIT,11,creuse,0,0,90,0
+IC NUIT,11,pointe,0,0,116,0
+IC NUIT,12,creuse,0,0,117,0
+IC NUIT,12,pointe,0,0,91,0
+IC NUIT,13,creuse,0,0,107,0
+IC NUIT,13,pointe,0,0,91,0
+IC NUIT,14,creuse,0,0,84,0
+IC NUIT,14,pointe,9,0,58,0
+IC NUIT,15,creuse,11,0,68,6
+IC NUIT,15,pointe,20,0,68,10
+IC NUIT,16,creuse,11,0,68,0
+IC NUIT,16,pointe,23,0,65,0
+IC NUIT,17,creuse,5,0,74,0
+IC NUIT,17,pointe,20,7,69,0
+IC NUIT,18,creuse,0,0,75,0
+IC NUIT,18,pointe,0,0,113,0
+IC NUIT,19,creuse,0,0,104,0
+IC NUIT,19,pointe,0,0,66,0
+IC NUIT,20,creuse,0,0,89,0
+IC NUIT,20,pointe,0,0,43,0
+IC NUIT,21,creuse,0,0,83,0
+IC NUIT,21,pointe,9,0,79,0
+IC NUIT,22,creuse,5,0,74,6
+IC NUIT,22,pointe,13,0,75,10
+IC NUIT,23,creuse,12,1,67,6
+IC NUIT,23,pointe,29,6,59,0
+IC NUIT,24,creuse,5,0,74,0
+IC NUIT,24,pointe,13,0,76,0
+IC NUIT,25,creuse,0,0,88,0
+IC NUIT,25,pointe,0,0,100,0
+IC NUIT,26,creuse,0,0,104,0
+IC NUIT,26,pointe,0,0,66,0
+IC NUIT,27,creuse,0,0,100,0
+IC NUIT,27,pointe,0,0,100,0
+IC NUIT,28,creuse,0,0,83,0
+IC NUIT,28,pointe,9,0,79,0
+IC NUIT,29,creuse,5,0,74,0
+IC NUIT,29,pointe,13,0,75,0
+IC NUIT,30,creuse,0,0,79,11
+IC NUIT,30,pointe,0,0,88,23
+IC SRO,1,creuse,0,0,822,0
+IC SRO,1,pointe,0,0,664,0
+IC SRO,2,creuse,0,0,822,0
+IC SRO,2,pointe,0,0,664,0
+IC SRO,3,creuse,0,0,822,0
+IC SRO,3,pointe,0,0,664,0
+IC SRO,4,creuse,0,0,822,0
+IC SRO,4,pointe,0,0,664,0
+IC SRO,5,creuse,0,0,828,0
+IC SRO,5,pointe,0,0,658,0
+IC SRO,6,creuse,0,0,828,0
+IC SRO,6,pointe,0,0,668,0
+IC SRO,7,creuse,0,0,822,0
+IC SRO,7,pointe,0,0,664,0
+IC SRO,8,creuse,0,0,822,0
+IC SRO,8,pointe,0,0,664,0
+IC SRO,9,creuse,0,0,822,0
+IC SRO,9,pointe,0,0,664,0
+IC SRO,10,creuse,0,0,822,0
+IC SRO,10,pointe,0,0,664,0
+IC SRO,11,creuse,0,0,822,0
+IC SRO,11,pointe,0,0,664,0
+IC SRO,12,creuse,0,0,828,0
+IC SRO,12,pointe,0,0,658,0
+IC SRO,13,creuse,0,0,828,0
+IC SRO,13,pointe,0,0,668,0
+IC SRO,14,creuse,0,0,822,0
+IC SRO,14,pointe,0,0,664,0
+IC SRO,15,creuse,0,0,822,0
+IC SRO,15,pointe,0,0,664,0
+IC SRO,16,creuse,0,0,822,0
+IC SRO,16,pointe,0,0,664,0
+IC SRO,17,creuse,0,0,822,0
+IC SRO,17,pointe,0,0,664,0
+IC SRO,18,creuse,0,0,822,0
+IC SRO,18,pointe,0,0,664,0
+IC SRO,19,creuse,0,0,828,0
+IC SRO,19,pointe,0,0,658,0
+IC SRO,20,creuse,0,0,828,0
+IC SRO,20,pointe,0,0,658,0
+IC SRO,21,creuse,0,0,818,0
+IC SRO,21,pointe,0,0,660,0
+IC SRO,22,creuse,0,0,818,0
+IC SRO,22,pointe,0,0,660,0
+IC SRO,23,creuse,0,0,818,0
+IC SRO,23,pointe,0,0,660,0
+IC SRO,24,creuse,0,0,818,0
+IC SRO,24,pointe,0,0,660,0
+IC SRO,25,creuse,0,0,822,0
+IC SRO,25,pointe,0,0,664,0
+IC SRO,26,creuse,0,0,828,0
+IC SRO,26,pointe,0,0,658,0
+IC SRO,27,creuse,0,0,828,0
+IC SRO,27,pointe,0,0,658,0
+IC SRO,28,creuse,0,0,818,0
+IC SRO,28,pointe,0,0,660,0
+IC SRO,29,creuse,0,0,818,0
+IC SRO,29,pointe,0,0,660,0
+IC SRO,30,creuse,0,0,818,0
+IC SRO,30,pointe,0,0,660,0
+INTERNATIONAL,1,creuse,8,0,359,2
+INTERNATIONAL,1,pointe,33,2,454,0
+INTERNATIONAL,2,creuse,10,2,357,3
+INTERNATIONAL,2,pointe,33,0,454,5
+INTERNATIONAL,3,creuse,4,0,363,4
+INTERNATIONAL,3,pointe,16,0,471,1
+INTERNATIONAL,4,creuse,6,2,367,0
+INTERNATIONAL,4,pointe,13,2,474,5
+INTERNATIONAL,5,creuse,5,0,424,0
+INTERNATIONAL,5,pointe,21,4,540,0
+INTERNATIONAL,6,creuse,6,0,379,0
+INTERNATIONAL,6,pointe,8,0,456,2
+INTERNATIONAL,7,creuse,7,2,369,3
+INTERNATIONAL,7,pointe,16,0,485,5
+INTERNATIONAL,8,creuse,6,0,352,2
+INTERNATIONAL,8,pointe,14,0,472,0
+INTERNATIONAL,9,creuse,6,0,352,0
+INTERNATIONAL,9,pointe,16,0,470,0
+INTERNATIONAL,10,creuse,8,0,372,0
+INTERNATIONAL,10,pointe,11,0,491,0
+INTERNATIONAL,11,creuse,2,0,387,0
+INTERNATIONAL,11,pointe,3,0,499,0
+INTERNATIONAL,12,creuse,6,0,450,0
+INTERNATIONAL,12,pointe,9,0,571,0
+INTERNATIONAL,13,creuse,3,0,389,0
+INTERNATIONAL,13,pointe,4,0,463,0
+INTERNATIONAL,14,creuse,2,0,315,0
+INTERNATIONAL,14,pointe,10,0,471,2
+INTERNATIONAL,15,creuse,11,0,288,2
+INTERNATIONAL,15,pointe,20,0,446,2
+INTERNATIONAL,16,creuse,11,2,288,0
+INTERNATIONAL,16,pointe,25,0,441,0
+INTERNATIONAL,17,creuse,6,0,315,0
+INTERNATIONAL,17,pointe,16,0,466,0
+INTERNATIONAL,18,creuse,3,0,363,0
+INTERNATIONAL,18,pointe,7,0,466,2
+INTERNATIONAL,19,creuse,10,2,365,0
+INTERNATIONAL,19,pointe,22,0,398,0
+INTERNATIONAL,20,creuse,0,0,376,0
+INTERNATIONAL,20,pointe,1,0,421,0
+INTERNATIONAL,21,creuse,4,0,296,0
+INTERNATIONAL,21,pointe,8,0,443,0
+INTERNATIONAL,22,creuse,9,0,273,0
+INTERNATIONAL,22,pointe,12,0,424,0
+INTERNATIONAL,23,creuse,4,0,278,0
+INTERNATIONAL,23,pointe,10,0,426,0
+INTERNATIONAL,24,creuse,4,0,300,0
+INTERNATIONAL,24,pointe,4,0,448,0
+INTERNATIONAL,25,creuse,3,0,341,0
+INTERNATIONAL,25,pointe,0,0,439,0
+INTERNATIONAL,26,creuse,0,0,328,0
+INTERNATIONAL,26,pointe,20,0,340,0
+INTERNATIONAL,27,creuse,0,0,334,0
+INTERNATIONAL,27,pointe,3,0,375,0
+INTERNATIONAL,28,creuse,0,0,268,0
+INTERNATIONAL,28,pointe,1,0,402,0
+INTERNATIONAL,29,creuse,8,2,242,0
+INTERNATIONAL,29,pointe,6,0,382,0
+INTERNATIONAL,30,creuse,0,0,250,10
+INTERNATIONAL,30,pointe,0,0,388,8
+NORD,1,creuse,246,29,192,5
+NORD,1,pointe,487,50,180,4
+NORD,2,creuse,210,28,228,5
+NORD,2,pointe,480,45,186,19
+NORD,3,creuse,221,40,229,21
+NORD,3,pointe,386,21,296,9
+NORD,4,creuse,53,0,448,133
+NORD,4,pointe,115,0,625,221
+NORD,5,creuse,50,11,483,6
+NORD,5,pointe,141,28,625,37
+NORD,6,creuse,38,21,394,8
+NORD,6,pointe,103,19,634,7
+NORD,7,creuse,46,4,423,0
+NORD,7,pointe,66,6,690,5
+NORD,8,creuse,72,8,386,6
+NORD,8,pointe,117,0,631,42
+NORD,9,creuse,63,6,397,7
+NORD,9,pointe,140,6,608,7
+NORD,10,creuse,70,5,396,1
+NORD,10,pointe,127,18,637,3
+NORD,11,creuse,48,0,462,2
+NORD,11,pointe,89,3,733,4
+NORD,12,creuse,31,0,512,20
+NORD,12,pointe,49,0,784,48
+NORD,13,creuse,14,2,419,0
+NORD,13,pointe,30,2,797,0
+NORD,14,creuse,34,0,432,9
+NORD,14,pointe,48,1,720,12
+NORD,15,creuse,84,3,352,0
+NORD,15,pointe,86,0,676,6
+NORD,16,creuse,54,0,392,3
+NORD,16,pointe,75,0,688,6
+NORD,17,creuse,38,1,414,14
+NORD,17,pointe,65,0,714,15
+NORD,18,creuse,34,0,478,0
+NORD,18,pointe,48,1,813,1
+NORD,19,creuse,35,0,513,5
+NORD,19,pointe,70,5,792,2
+NORD,20,creuse,37,0,414,3
+NORD,20,pointe,50,0,763,1
+NORD,21,creuse,31,0,443,3
+NORD,21,pointe,47,0,722,0
+NORD,22,creuse,59,0,385,0
+NORD,22,pointe,84,0,679,3
+NORD,23,creuse,54,0,392,39
+NORD,23,pointe,67,0,696,13
+NORD,24,creuse,43,0,409,2
+NORD,24,pointe,54,0,725,1
+NORD,25,creuse,39,0,472,0
+NORD,25,pointe,46,2,814,0
+NORD,26,creuse,34,0,508,1
+NORD,26,pointe,134,3,707,0
+NORD,27,creuse,48,18,394,0
+NORD,27,pointe,34,0,752,6
+NORD,28,creuse,31,0,431,1
+NORD,28,pointe,37,0,716,2
+NORD,29,creuse,49,5,383,4
+NORD,29,pointe,68,4,679,2
+NORD,30,creuse,0,0,434,58
+NORD,30,pointe,0,0,747,90
+OUIGO_TC,1,creuse,0,0,56,0
+OUIGO_TC,1,pointe,0,0,78,0
+OUIGO_TC,2,creuse,0,0,109,0
+OUIGO_TC,2,pointe,0,0,151,0
+OUIGO_TC,3,creuse,0,0,106,0
+OUIGO_TC,3,pointe,0,0,148,0
+OUIGO_TC,4,creuse,0,0,121,0
+OUIGO_TC,4,pointe,0,0,166,0
+OUIGO_TC,5,creuse,0,0,133,0
+OUIGO_TC,5,pointe,0,0,207,0
+OUIGO_TC,6,creuse,0,0,132,0
+OUIGO_TC,6,pointe,0,0,181,0
+OUIGO_TC,7,creuse,0,0,85,0
+OUIGO_TC,7,pointe,0,0,136,0
+OUIGO_TC,8,creuse,0,0,101,0
+OUIGO_TC,8,pointe,0,0,124,0
+OUIGO_TC,9,creuse,0,0,101,0
+OUIGO_TC,9,pointe,0,0,124,0
+OUIGO_TC,10,creuse,0,0,85,0
+OUIGO_TC,10,pointe,0,0,136,0
+OUIGO_TC,11,creuse,0,0,97,0
+OUIGO_TC,11,pointe,0,0,151,0
+OUIGO_TC,12,creuse,0,0,133,0
+OUIGO_TC,12,pointe,0,0,207,0
+OUIGO_TC,13,creuse,0,0,132,0
+OUIGO_TC,13,pointe,0,0,181,0
+OUIGO_TC,14,creuse,0,0,63,0
+OUIGO_TC,14,pointe,0,0,114,0
+OUIGO_TC,15,creuse,0,0,79,0
+OUIGO_TC,15,pointe,0,0,102,0
+OUIGO_TC,16,creuse,0,0,79,0
+OUIGO_TC,16,pointe,0,0,102,0
+OUIGO_TC,17,creuse,0,0,63,0
+OUIGO_TC,17,pointe,0,0,114,0
+OUIGO_TC,18,creuse,0,0,75,0
+OUIGO_TC,18,pointe,0,0,129,0
+OUIGO_TC,19,creuse,0,0,133,0
+OUIGO_TC,19,pointe,0,0,207,0
+OUIGO_TC,20,creuse,0,0,132,0
+OUIGO_TC,20,pointe,0,0,181,0
+OUIGO_TC,21,creuse,0,0,62,0
+OUIGO_TC,21,pointe,0,0,116,0
+OUIGO_TC,22,creuse,0,0,100,0
+OUIGO_TC,22,pointe,0,0,82,0
+OUIGO_TC,23,creuse,0,0,100,0
+OUIGO_TC,23,pointe,0,0,82,0
+OUIGO_TC,24,creuse,0,0,65,0
+OUIGO_TC,24,pointe,0,0,118,0
+OUIGO_TC,25,creuse,0,0,121,0
+OUIGO_TC,25,pointe,0,0,173,0
+OUIGO_TC,26,creuse,0,0,79,0
+OUIGO_TC,26,pointe,0,0,137,0
+OUIGO_TC,27,creuse,0,0,132,0
+OUIGO_TC,27,pointe,0,0,181,0
+OUIGO_TC,28,creuse,0,0,62,0
+OUIGO_TC,28,pointe,0,0,103,0
+OUIGO_TC,29,creuse,0,0,100,0
+OUIGO_TC,29,pointe,0,0,82,0
+OUIGO_TC,30,creuse,0,0,100,0
+OUIGO_TC,30,pointe,0,0,82,0
+OUIGO_atlantique,1,creuse,0,0,109,0
+OUIGO_atlantique,1,pointe,0,0,107,0
+OUIGO_atlantique,2,creuse,0,0,109,0
+OUIGO_atlantique,2,pointe,0,0,117,0
+OUIGO_atlantique,3,creuse,0,0,110,0
+OUIGO_atlantique,3,pointe,0,0,118,0
+OUIGO_atlantique,4,creuse,0,0,107,0
+OUIGO_atlantique,4,pointe,0,0,119,0
+OUIGO_atlantique,5,creuse,0,0,108,0
+OUIGO_atlantique,5,pointe,0,0,120,0
+OUIGO_atlantique,6,creuse,0,0,110,0
+OUIGO_atlantique,6,pointe,0,0,118,0
+OUIGO_atlantique,7,creuse,0,0,110,0
+OUIGO_atlantique,7,pointe,0,0,118,0
+OUIGO_atlantique,8,creuse,0,0,110,0
+OUIGO_atlantique,8,pointe,0,0,118,0
+OUIGO_atlantique,9,creuse,0,0,110,0
+OUIGO_atlantique,9,pointe,0,0,118,0
+OUIGO_atlantique,10,creuse,0,0,110,0
+OUIGO_atlantique,10,pointe,0,0,118,0
+OUIGO_atlantique,11,creuse,0,0,107,0
+OUIGO_atlantique,11,pointe,0,0,119,0
+OUIGO_atlantique,12,creuse,0,0,108,0
+OUIGO_atlantique,12,pointe,0,0,120,0
+OUIGO_atlantique,13,creuse,0,0,110,0
+OUIGO_atlantique,13,pointe,0,0,118,0
+OUIGO_atlantique,14,creuse,0,0,110,0
+OUIGO_atlantique,14,pointe,0,0,122,0
+OUIGO_atlantique,15,creuse,0,0,106,0
+OUIGO_atlantique,15,pointe,0,0,106,0
+OUIGO_atlantique,16,creuse,0,0,106,0
+OUIGO_atlantique,16,pointe,0,0,106,0
+OUIGO_atlantique,17,creuse,0,0,106,0
+OUIGO_atlantique,17,pointe,0,0,106,0
+OUIGO_atlantique,18,creuse,0,0,109,0
+OUIGO_atlantique,18,pointe,0,0,123,0
+OUIGO_atlantique,19,creuse,0,0,106,0
+OUIGO_atlantique,19,pointe,0,0,106,0
+OUIGO_atlantique,20,creuse,0,0,110,0
+OUIGO_atlantique,20,pointe,0,0,122,0
+OUIGO_atlantique,21,creuse,0,0,110,0
+OUIGO_atlantique,21,pointe,0,0,122,0
+OUIGO_atlantique,22,creuse,0,0,106,0
+OUIGO_atlantique,22,pointe,0,0,106,0
+OUIGO_atlantique,23,creuse,0,0,106,0
+OUIGO_atlantique,23,pointe,0,0,106,0
+OUIGO_atlantique,24,creuse,0,0,106,0
+OUIGO_atlantique,24,pointe,0,0,106,0
+OUIGO_atlantique,25,creuse,0,0,109,0
+OUIGO_atlantique,25,pointe,0,0,123,0
+OUIGO_atlantique,26,creuse,0,0,103,0
+OUIGO_atlantique,26,pointe,0,0,118,0
+OUIGO_atlantique,27,creuse,0,0,110,0
+OUIGO_atlantique,27,pointe,0,0,122,0
+OUIGO_atlantique,28,creuse,0,0,105,0
+OUIGO_atlantique,28,pointe,0,0,122,0
+OUIGO_atlantique,29,creuse,0,0,101,0
+OUIGO_atlantique,29,pointe,0,0,106,0
+OUIGO_atlantique,30,creuse,0,0,101,0
+OUIGO_atlantique,30,pointe,0,0,106,0
+OUIGO_est,1,creuse,0,0,5,0
+OUIGO_est,1,pointe,0,0,5,0
+OUIGO_est,2,creuse,0,0,5,0
+OUIGO_est,2,pointe,0,0,5,0
+OUIGO_est,3,creuse,0,0,5,0
+OUIGO_est,3,pointe,0,0,5,0
+OUIGO_est,4,creuse,0,0,5,0
+OUIGO_est,4,pointe,0,0,5,0
+OUIGO_est,5,creuse,0,0,5,0
+OUIGO_est,5,pointe,0,0,5,0
+OUIGO_est,6,creuse,0,0,5,0
+OUIGO_est,6,pointe,0,0,5,0
+OUIGO_est,7,creuse,0,0,5,0
+OUIGO_est,7,pointe,0,0,5,0
+OUIGO_est,8,creuse,0,0,5,0
+OUIGO_est,8,pointe,0,0,5,0
+OUIGO_est,9,creuse,0,0,5,0
+OUIGO_est,9,pointe,0,0,5,0
+OUIGO_est,10,creuse,0,0,5,0
+OUIGO_est,10,pointe,0,0,5,0
+OUIGO_est,11,creuse,0,0,5,0
+OUIGO_est,11,pointe,0,0,5,0
+OUIGO_est,12,creuse,0,0,5,0
+OUIGO_est,12,pointe,0,0,5,0
+OUIGO_est,13,creuse,0,0,5,0
+OUIGO_est,13,pointe,0,0,5,0
+OUIGO_est,14,creuse,0,0,5,0
+OUIGO_est,14,pointe,0,0,5,0
+OUIGO_est,15,creuse,0,0,5,0
+OUIGO_est,15,pointe,0,0,5,0
+OUIGO_est,16,creuse,0,0,5,0
+OUIGO_est,16,pointe,0,0,5,0
+OUIGO_est,17,creuse,0,0,5,0
+OUIGO_est,17,pointe,0,0,5,0
+OUIGO_est,18,creuse,0,0,5,0
+OUIGO_est,18,pointe,0,0,5,0
+OUIGO_est,19,creuse,0,0,5,0
+OUIGO_est,19,pointe,0,0,5,0
+OUIGO_est,20,creuse,0,0,5,0
+OUIGO_est,20,pointe,0,0,5,0
+OUIGO_est,21,creuse,0,0,5,0
+OUIGO_est,21,pointe,0,0,5,0
+OUIGO_est,22,creuse,0,0,5,0
+OUIGO_est,22,pointe,0,0,5,0
+OUIGO_est,23,creuse,0,0,5,0
+OUIGO_est,23,pointe,0,0,5,0
+OUIGO_est,24,creuse,0,0,5,0
+OUIGO_est,24,pointe,0,0,5,0
+OUIGO_est,25,creuse,0,0,5,0
+OUIGO_est,25,pointe,0,0,5,0
+OUIGO_est,26,creuse,0,0,5,0
+OUIGO_est,26,pointe,0,0,5,0
+OUIGO_est,27,creuse,0,0,5,0
+OUIGO_est,27,pointe,0,0,5,0
+OUIGO_est,28,creuse,0,0,5,0
+OUIGO_est,28,pointe,0,0,5,0
+OUIGO_est,29,creuse,0,0,5,0
+OUIGO_est,29,pointe,0,0,5,0
+OUIGO_est,30,creuse,0,0,5,0
+OUIGO_est,30,pointe,0,0,5,0
+OUIGO_nord,1,creuse,0,0,111,0
+OUIGO_nord,1,pointe,0,0,177,0
+OUIGO_nord,2,creuse,0,0,112,0
+OUIGO_nord,2,pointe,0,0,186,0
+OUIGO_nord,3,creuse,0,0,112,0
+OUIGO_nord,3,pointe,0,0,186,0
+OUIGO_nord,4,creuse,0,0,112,0
+OUIGO_nord,4,pointe,0,0,186,0
+OUIGO_nord,5,creuse,0,0,112,0
+OUIGO_nord,5,pointe,0,0,186,0
+OUIGO_nord,6,creuse,0,0,110,0
+OUIGO_nord,6,pointe,0,0,178,0
+OUIGO_nord,7,creuse,0,0,112,0
+OUIGO_nord,7,pointe,0,0,186,0
+OUIGO_nord,8,creuse,0,0,112,0
+OUIGO_nord,8,pointe,0,0,186,0
+OUIGO_nord,9,creuse,0,0,112,0
+OUIGO_nord,9,pointe,0,0,186,0
+OUIGO_nord,10,creuse,0,0,112,0
+OUIGO_nord,10,pointe,0,0,186,0
+OUIGO_nord,11,creuse,0,0,112,0
+OUIGO_nord,11,pointe,0,0,186,0
+OUIGO_nord,12,creuse,0,0,112,0
+OUIGO_nord,12,pointe,0,0,186,0
+OUIGO_nord,13,creuse,0,0,111,0
+OUIGO_nord,13,pointe,0,0,187,0
+OUIGO_nord,14,creuse,0,0,112,0
+OUIGO_nord,14,pointe,0,0,186,0
+OUIGO_nord,15,creuse,0,0,112,0
+OUIGO_nord,15,pointe,0,0,186,0
+OUIGO_nord,16,creuse,0,0,112,0
+OUIGO_nord,16,pointe,0,0,186,0
+OUIGO_nord,17,creuse,0,0,112,0
+OUIGO_nord,17,pointe,0,0,186,0
+OUIGO_nord,18,creuse,0,0,112,0
+OUIGO_nord,18,pointe,0,0,186,0
+OUIGO_nord,19,creuse,0,0,110,0
+OUIGO_nord,19,pointe,0,0,179,0
+OUIGO_nord,20,creuse,0,0,111,0
+OUIGO_nord,20,pointe,0,0,187,0
+OUIGO_nord,21,creuse,0,0,112,0
+OUIGO_nord,21,pointe,0,0,186,0
+OUIGO_nord,22,creuse,0,0,112,0
+OUIGO_nord,22,pointe,0,0,186,0
+OUIGO_nord,23,creuse,0,0,112,0
+OUIGO_nord,23,pointe,0,0,186,0
+OUIGO_nord,24,creuse,0,0,112,0
+OUIGO_nord,24,pointe,0,0,186,0
+OUIGO_nord,25,creuse,0,0,112,0
+OUIGO_nord,25,pointe,0,0,186,0
+OUIGO_nord,26,creuse,0,0,110,0
+OUIGO_nord,26,pointe,0,0,179,0
+OUIGO_nord,27,creuse,0,0,111,0
+OUIGO_nord,27,pointe,0,0,187,0
+OUIGO_nord,28,creuse,0,0,112,0
+OUIGO_nord,28,pointe,0,0,186,0
+OUIGO_nord,29,creuse,0,0,120,0
+OUIGO_nord,29,pointe,0,0,178,0
+OUIGO_nord,30,creuse,0,0,120,0
+OUIGO_nord,30,pointe,0,0,178,0
+OUIGO_sud-est,1,creuse,0,0,71,0
+OUIGO_sud-est,1,pointe,0,0,67,0
+OUIGO_sud-est,2,creuse,0,0,100,0
+OUIGO_sud-est,2,pointe,0,0,119,0
+OUIGO_sud-est,3,creuse,0,0,100,0
+OUIGO_sud-est,3,pointe,0,0,119,0
+OUIGO_sud-est,4,creuse,0,0,100,0
+OUIGO_sud-est,4,pointe,0,0,119,0
+OUIGO_sud-est,5,creuse,0,0,100,0
+OUIGO_sud-est,5,pointe,0,0,119,0
+OUIGO_sud-est,6,creuse,0,0,92,0
+OUIGO_sud-est,6,pointe,0,0,119,0
+OUIGO_sud-est,7,creuse,0,0,100,0
+OUIGO_sud-est,7,pointe,0,0,119,0
+OUIGO_sud-est,8,creuse,0,0,100,0
+OUIGO_sud-est,8,pointe,0,0,119,0
+OUIGO_sud-est,9,creuse,0,0,100,0
+OUIGO_sud-est,9,pointe,0,0,119,0
+OUIGO_sud-est,10,creuse,0,0,100,0
+OUIGO_sud-est,10,pointe,0,0,119,0
+OUIGO_sud-est,11,creuse,0,0,100,0
+OUIGO_sud-est,11,pointe,0,0,119,0
+OUIGO_sud-est,12,creuse,0,0,100,0
+OUIGO_sud-est,12,pointe,0,0,119,0
+OUIGO_sud-est,13,creuse,0,0,100,0
+OUIGO_sud-est,13,pointe,0,0,119,0
+OUIGO_sud-est,14,creuse,0,0,100,0
+OUIGO_sud-est,14,pointe,0,0,119,0
+OUIGO_sud-est,15,creuse,0,0,100,0
+OUIGO_sud-est,15,pointe,0,0,119,0
+OUIGO_sud-est,16,creuse,0,0,100,0
+OUIGO_sud-est,16,pointe,0,0,119,0
+OUIGO_sud-est,17,creuse,0,0,100,0
+OUIGO_sud-est,17,pointe,0,0,119,0
+OUIGO_sud-est,18,creuse,0,0,100,0
+OUIGO_sud-est,18,pointe,0,0,119,0
+OUIGO_sud-est,19,creuse,0,0,100,0
+OUIGO_sud-est,19,pointe,0,0,119,0
+OUIGO_sud-est,20,creuse,0,0,100,0
+OUIGO_sud-est,20,pointe,0,0,119,0
+OUIGO_sud-est,21,creuse,0,0,100,0
+OUIGO_sud-est,21,pointe,0,0,119,0
+OUIGO_sud-est,22,creuse,0,0,100,0
+OUIGO_sud-est,22,pointe,0,0,119,0
+OUIGO_sud-est,23,creuse,0,0,100,0
+OUIGO_sud-est,23,pointe,0,0,119,0
+OUIGO_sud-est,24,creuse,0,0,100,0
+OUIGO_sud-est,24,pointe,0,0,119,0
+OUIGO_sud-est,25,creuse,0,0,100,0
+OUIGO_sud-est,25,pointe,0,0,119,0
+OUIGO_sud-est,26,creuse,0,0,100,0
+OUIGO_sud-est,26,pointe,0,0,119,0
+OUIGO_sud-est,27,creuse,0,0,100,0
+OUIGO_sud-est,27,pointe,0,0,119,0
+OUIGO_sud-est,28,creuse,0,0,100,0
+OUIGO_sud-est,28,pointe,0,0,119,0
+OUIGO_sud-est,29,creuse,0,0,100,0
+OUIGO_sud-est,29,pointe,0,0,119,0
+OUIGO_sud-est,30,creuse,0,0,100,0
+OUIGO_sud-est,30,pointe,0,0,119,0
+SUD EST,1,creuse,538,68,440,68
+SUD EST,1,pointe,811,119,579,77
+SUD EST,2,creuse,679,39,309,32
+SUD EST,2,pointe,918,51,465,39
+SUD EST,3,creuse,583,15,412,17
+SUD EST,3,pointe,841,36,560,20
+SUD EST,4,creuse,202,2,865,389
+SUD EST,4,pointe,302,9,1171,410
+SUD EST,5,creuse,194,19,857,29
+SUD EST,5,pointe,360,27,967,32
+SUD EST,6,creuse,232,6,860,28
+SUD EST,6,pointe,363,21,1068,44
+SUD EST,7,creuse,173,17,856,17
+SUD EST,7,pointe,253,36,1107,36
+SUD EST,8,creuse,279,40,709,18
+SUD EST,8,pointe,450,43,937,38
+SUD EST,9,creuse,339,8,654,26
+SUD EST,9,pointe,409,25,984,24
+SUD EST,10,creuse,250,1,765,27
+SUD EST,10,pointe,271,3,1144,27
+SUD EST,11,creuse,260,28,812,30
+SUD EST,11,pointe,300,12,1179,88
+SUD EST,12,creuse,141,0,965,152
+SUD EST,12,pointe,288,1,1193,186
+SUD EST,13,creuse,141,3,948,53
+SUD EST,13,pointe,306,4,1122,38
+SUD EST,14,creuse,57,4,749,2
+SUD EST,14,pointe,153,12,972,42
+SUD EST,15,creuse,181,1,605,7
+SUD EST,15,pointe,330,11,857,47
+SUD EST,16,creuse,226,6,570,10
+SUD EST,16,pointe,471,3,723,6
+SUD EST,17,creuse,172,5,639,29
+SUD EST,17,pointe,315,4,898,11
+SUD EST,18,creuse,78,6,802,10
+SUD EST,18,pointe,155,8,1062,21
+SUD EST,19,creuse,137,6,679,3
+SUD EST,19,pointe,260,53,932,0
+SUD EST,20,creuse,79,10,896,0
+SUD EST,20,pointe,162,26,1113,1
+SUD EST,21,creuse,70,1,739,0
+SUD EST,21,pointe,180,14,970,3
+SUD EST,22,creuse,160,6,622,4
+SUD EST,22,pointe,341,35,866,7
+SUD EST,23,creuse,143,0,646,0
+SUD EST,23,pointe,310,0,901,1
+SUD EST,24,creuse,115,3,694,6
+SUD EST,24,pointe,216,0,1008,56
+SUD EST,25,creuse,54,0,834,12
+SUD EST,25,pointe,111,6,1114,12
+SUD EST,26,creuse,91,6,664,3
+SUD EST,26,pointe,186,0,890,3
+SUD EST,27,creuse,77,15,882,2
+SUD EST,27,pointe,135,15,1118,1
+SUD EST,28,creuse,60,0,747,3
+SUD EST,28,pointe,126,0,1026,27
+SUD EST,29,creuse,94,0,682,20
+SUD EST,29,pointe,269,3,938,34
+SUD EST,30,creuse,7,0,776,71
+SUD EST,30,pointe,0,0,1211,208
