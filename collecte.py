@@ -79,7 +79,10 @@ TABLES = {
     # La structure : où, quand dans la journée, à quelle distance du départ.
     "horizon": ("axe", "horizon", "pointe"),
     # Le tempérament d'un train : part-il tôt ou tard. La forme fine de la
-    # décroissance venant de la table ci-dessus, quatre bandes suffisent ici.
+    # décroissance venant de la table ci-dessus, six bandes suffisent ici — mais
+    # il en faut six et non quatre, parce qu'une bande doit être homogène et que
+    # trois horizons de la fenêtre ouvrent dix fois plus que les autres. Voir
+    # `bande`.
     "train": ("train_no", "origine_iata", "destination_iata", "bande"),
     # Le calendrier. On y garde l'horizon *exact* et non une bande : la date
     # d'observation s'en déduit (date_voyage − horizon), et avec elle le rythme
@@ -113,23 +116,45 @@ CHAMPS_REF = (
 def bande(horizon: int) -> str:
     """Regroupe les horizons pour la table par train.
 
-    L'horizon 30 forme une bande à lui seul, et ce n'est pas un détail : à
-    06 h 24, le quota Max de J-30 n'est pas encore chargé. Mesuré sur le relevé
-    du 17/08, le bord de fenêtre affiche 0,1 % de places ouvertes contre 11,8 %
-    à J+23 et 16,7 % à J+16 — un mercredi dans les trois cas, donc à composition
-    comparable. C'est un état d'avant-ouverture, pas un état de marché. Le
-    fondre dans « lointain » ferait entrer une surcharge d'ouverture dans le
-    tempérament de chaque train, et fausserait la table pour tout le monde.
+    Une bande doit être homogène, sinon elle ne dit rien : mélanger un horizon
+    où 16 % du parc s'ouvre avec quatre horizons où il ne s'en ouvre que 3 %
+    fabrique une moyenne à laquelle aucun train ne ressemble.
+
+    Le découpage d'origine partait du seul relevé du 17/08, et n'isolait donc
+    que l'horizon 30 — le bord de fenêtre, où le quota de J-30 n'est pas encore
+    chargé et où l'on ne voit que 0,09 % de places ouvertes. Cette bande-là était
+    juste, et elle ne bouge pas.
+
+    Les sept premiers relevés en ont révélé deux autres, invisibles dans un état
+    instantané parce qu'elles ne se lisent que dans les passages (voir
+    ANALYSE-2026-08-24.md) : le quota se recharge aussi en arrivant à J-11 et à
+    J-3. Mesuré sur 2 755 821 passages, le taux de réouverture vaut 10,83 % au
+    départ de l'horizon 30, 8,27 % au départ du 12, 16,47 % au départ du 4, et
+    1,30 % partout ailleurs. Ces trois horizons portent 75 % du flux net de toute
+    la fenêtre.
+
+    Or 12 tombait au milieu de « moyen » (8 à 14) et 4 au milieu de « proche »
+    (3 à 7). Chacune de ces deux bandes mélangeait donc une vague et six
+    horizons calmes. Elles sont ici coupées de part et d'autre des vagues.
+
+    **Les libellés changent tous, sauf `ouverture`.** Une bande dont le sens
+    change mais pas le nom serait un piège : « moyen » voudrait dire 8 à 14 dans
+    les lignes d'avant et 5 à 11 dans celles d'après, dans le même fichier, sans
+    rien pour les distinguer. Les partitions mensuelles ne se resépareront jamais
+    — autant que les clés, elles, se séparent. `ouverture` garde son nom parce
+    qu'elle garde exactement son horizon.
     """
     if horizon >= HORIZON_MAX:
-        return "ouverture"
-    if horizon >= 15:
-        return "lointain"
-    if horizon >= 8:
-        return "moyen"
-    if horizon >= 3:
-        return "proche"
-    return "imminent"
+        return "ouverture"       # 30 — le quota n'est pas encore chargé
+    if horizon >= 13:
+        return "plateau"         # 13 à 29 — dix-sept jours où rien ne bouge
+    if horizon == 12:
+        return "relance"         # la vague qui ouvre en arrivant à J-11
+    if horizon >= 5:
+        return "intervalle"      # 5 à 11 — entre les deux dernières vagues
+    if horizon == 4:
+        return "bascule"         # la vague qui ouvre en arrivant à J-3
+    return "derniers_jours"      # 1 à 3 — après la dernière vague
 
 
 def pointe(heure_depart: str) -> str:

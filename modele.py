@@ -68,14 +68,31 @@ JOURS = ("lun", "mar", "mer", "jeu", "ven", "sam", "dim")
 # la forme fine de la table par horizon.
 BANDES = {
     "ouverture": (30, 30),
+    "plateau": (13, 29),
+    "relance": (12, 12),
+    "intervalle": (5, 11),
+    "bascule": (4, 4),
+    "derniers_jours": (1, 3),
+}
+
+# Le découpage d'avant le 24/08, qui n'isolait que le bord de fenêtre. Les
+# partitions mensuelles ne se resépareront jamais : les lignes déjà écrites
+# gardent leurs libellés pour toujours, et le modèle doit continuer de savoir à
+# quels horizons elles correspondaient. C'est précisément pour rendre cette
+# cohabitation lisible que les nouveaux libellés sont tous différents des
+# anciens — `ouverture` mise à part, qui n'a pas changé d'horizon.
+BANDES_HERITEES = {
     "lointain": (15, 29),
     "moyen": (8, 14),
     "proche": (3, 7),
     "imminent": (1, 2),
 }
 
+PORTEE_BANDE = {**BANDES, **BANDES_HERITEES}
+
 
 def bande(h: int) -> str:
+    """Le libellé courant d'un horizon. Ne rend jamais un libellé hérité."""
     for nom, (lo, hi) in BANDES.items():
         if lo <= h <= hi:
             return nom
@@ -395,9 +412,13 @@ class Modele:
             axe = self.axes_couple.get((t, o, d))
             if axe is None:
                 continue
-            lo, hi = BANDES[bd]
+            lo, hi = PORTEE_BANDE[bd]
             # Une bande couvre plusieurs horizons ; on répartit son effectif sur
             # eux au prorata du volume global, faute de connaître le détail.
+            # C'est cette répartition qui permet aux deux découpages de coexister
+            # sans se contredire : une ligne héritée et une ligne courante ne
+            # portent pas la même étendue, mais chacune est ramenée aux horizons
+            # qui sont réellement les siens avant d'être comparée à son axe.
             poids_o = sum(self.global_n[h][0] for h in range(lo, hi + 1)) or 1
             poids_f = sum(self.global_n[h][2] for h in range(lo, hi + 1)) or 1
             e_f = sum(v[0] * self.global_n[h][0] / poids_o * self.a_ferme[(axe, h)]
@@ -667,7 +688,7 @@ def valider(jours_retenus: int = 2) -> dict:
         axe = axes_couple.get((t, o, d))
         if axe is None:
             continue
-        lo, hi = BANDES[bd]
+        lo, hi = PORTEE_BANDE[bd]
         po = sum(m.global_n[h][0] for h in range(lo, hi + 1)) or 1
         pf = sum(m.global_n[h][2] for h in range(lo, hi + 1)) or 1
         f_axe = sum(m.global_n[h][0] / po * m.a_ferme[(axe, h)] for h in range(lo, hi + 1))
@@ -738,6 +759,7 @@ def construire_artefact(m: Modele, tables: dict, validation: dict,
         },
         "horizons": [HORIZON_MIN, HORIZON_MAX],
         "bandes": {b: list(v) for b, v in BANDES.items()},
+        "bandes_heritees": {b: list(v) for b, v in BANDES_HERITEES.items()},
         "jours": list(JOURS),
     }
 

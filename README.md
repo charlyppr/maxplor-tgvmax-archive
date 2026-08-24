@@ -71,6 +71,29 @@ d'avant-ouverture est structurel et certain ; la pente et le cycle hebdomadaire
 sont forts mais restent à confirmer par l'archive, la mi-août n'étant pas une
 semaine ordinaire.
 
+### Ce que les sept premiers relevés en ont dit
+
+La réserve ci-dessus a été levée le 24 août, sur 2 755 821 passages. Le détail
+est dans [`ANALYSE-2026-08-24.md`](ANALYSE-2026-08-24.md) ; en trois lignes :
+
+**Le bord d'avant-ouverture est confirmé, et largement.** 0,088 % de places
+ouvertes à l'horizon 30, et 10,83 % du parc fermé qui bascule en arrivant à
+J-29 — vingt et une fois la médiane des horizons voisins. Isoler cette bande
+était le bon choix.
+
+**La pente est fausse : c'est un escalier.** Deux autres vagues existent, à J-11
+(8,27 % de réouverture) et à J-3 (16,47 %, la plus forte des trois), contre
+1,30 % partout ailleurs. À elles trois elles portent 75 % du flux net. Entre
+J-29 et J-13, la fenêtre est plate — dix-sept jours où attendre ne rapporte
+rien. Ces deux vagues sont invisibles dans un état instantané : elles ne se
+lisent que dans les passages, et sont le premier résultat que l'archive apporte.
+C'est ce qui a fait passer les bandes de cinq à six.
+
+**Le cycle hebdomadaire tient, mais moitié moins fort qu'annoncé.** À horizon
+standardisé, 7,92 % un dimanche contre 19,16 % un mercredi : ×2,4 et non ×4,9.
+Les deux chiffres ci-dessus cumulaient l'effet de jour et l'effet d'horizon. La
+conclusion de conception ne change pas — garder la date exacte reste juste.
+
 ## Les quatre tables
 
 Croiser toutes les dimensions dans une clé unique donnerait des millions de
@@ -81,8 +104,11 @@ reste dense, ce qui est la condition pour qu'elle apprenne vite.
 - **`horizon`** — `(axe, horizon, pointe)`. La structure. Bornée à 840 lignes par
   mois, elle ne grandit pas : elle s'affine.
 - **`train`** — `(train, origine, destination, bande)`. Le tempérament d'un
-  train : part-il tôt ou tard. Cinq bandes d'horizon, la forme fine venant de la
-  table précédente.
+  train : part-il tôt ou tard. Six bandes d'horizon, la forme fine venant de la
+  table précédente. Les bandes isolent les trois horizons où le quota se
+  recharge — 30, 12 et 4 — des stretches calmes qui les séparent : une bande
+  qui mêlerait les deux fabriquerait une moyenne à laquelle aucun train ne
+  ressemble. Voir `bande()` dans `collecte.py`.
 - **`calendrier`** — `(axe, date de voyage, horizon)`. L'horizon y est **exact**
   et non regroupé, ce qui rend la date d'observation exactement récupérable
   (`observation = date de voyage − horizon`). Le rythme de réservation n'est pas
