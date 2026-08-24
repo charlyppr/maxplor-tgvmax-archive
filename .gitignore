@@ -6,6 +6,9 @@ etat/
 # Écritures atomiques en cours.
 *.tmp
 
+# Le cache d'octets de Python, qui apparaît dès qu'un module est importé.
+__pycache__/
+
 # Relevés fabriqués pour la mise au point du comptage, et copies datées des
 # états, qui vivent en release asset et non dans git.
 # Le chiffre est indispensable : « jour*.csv » avalait aussi journal.csv, qui
