@@ -83,7 +83,9 @@ Deux absences à noter, parce qu'elles sont des travaux :
   "version": "modele-v1",
   "fenetre": { "premier_releve_compte", "dernier_releve_compte", "releves_comptes" },
   "horizons": [1, 30],
-  "bandes": { "ouverture": [30,30], "lointain": [15,29], … },
+  "bandes": { "ouverture": [30,30], "plateau": [13,29], "relance": [12,12],
+              "intervalle": [5,11], "bascule": [4,4], "derniers_jours": [1,3] },
+  "bandes_heritees": { "lointain": [15,29], "moyen": [8,14], … },
   "jours": ["lun","mar","mer","jeu","ven","sam","dim"],
 
   "global": { "ferme": [30 entiers], "rouvre": [30], "n_ouvert": [30], "n_ferme": [30] },
@@ -119,6 +121,11 @@ Conventions, à respecter à la lettre :
   (`IC SRO`, `AUTOCAR SNCF`, les cinq `OUIGO_*`), soit 22,5 % de l'archive.
 - `n_ouvert` et `n_ferme` accompagnent chaque taux : **c'est l'effectif qui
   décide de la bande affichée**, pas seulement le taux. Voir § 6.
+- `bandes` et `bandes_heritees` sont **informatifs** : le client n'en a pas
+  besoin, la table `trains` portant un multiplicateur unique par couple. Ils
+  disent seulement à quels horizons correspondent les libellés des compteurs,
+  l'archive en ayant connu deux découpages successifs (le second isole les trois
+  horizons de vague, à partir du relevé du 25 août).
 
 ### 3.2 Ce que v1 ne porte pas, et ce que v2 devra porter
 
