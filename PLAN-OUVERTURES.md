@@ -74,13 +74,15 @@ Deux absences à noter, parce qu'elles sont des travaux :
 
 ## 3. Le contrat de l'artefact
 
-`modele/modele-v1.json`, 408 Ko, à déposer en `Maxplor/Resources/modele-v1.json`.
+`modele/modele-v2.json`, 422 Ko, à déposer en `Maxplor/Resources/modele-v2.json`.
+Retiré chaque lundi par `.github/workflows/modele.yml`. La v1 (24 août, sept
+relevés) reste dans le dépôt pour mémoire ; plus rien ne la lit.
 
 ### 3.1 Ce que le client lit
 
 ```
 {
-  "version": "modele-v1",
+  "version": "modele-v2",
   "fenetre": { "premier_releve_compte", "dernier_releve_compte", "releves_comptes" },
   "horizons": [1, 30],
   "bandes": { "ouverture": [30,30], "plateau": [13,29], "relance": [12,12],
@@ -94,22 +96,42 @@ Deux absences à noter, parce qu'elles sont des travaux :
                            "pointe": { "pointe": [mf, mr], "creuse": [mf, mr] } }, … },
   "jour_voyage": { "mer": { "m_ferme", "m_rouvre", "n_ouvert", "n_ferme" }, … },
 
-  "trains": { "gares": [342 codes],
-              "cles": "trainNo.iOrigine.iDestination;…",
-              "sans_place_max": [indices],
-              "m_ferme":  [index, millièmes, index, millièmes, …],
-              "m_rouvre": [index, millièmes, …] },
+  "trains": { "gares": [codes Resarail],
+              "cles": "trainNo:iO.iD,iO.iD;trainNo:iO.iD;…",
+              "sans_place_max": [écarts d'index],
+              "m_ferme":  [écart, centièmes, écart, centièmes, …],
+              "m_rouvre": [écart, centièmes, …],
+              "bandes": { "ouverture": { "rouvre": [écart, centièmes, …] },
+                          "plateau":   { "ferme":  […] },
+                          "bascule":   { "ferme": […], "rouvre": […] } } },
 
   "vagues": { "horizons": [30,12,4], "taux_rouvre": {…}, "n_ferme": {…} },
   "validation": { … },
-  "reserves": [ quatre phrases affichables ]
+  "reserves": [ phrases affichables, recalculées à chaque tirage ]
 }
 ```
 
 Conventions, à respecter à la lettre :
 
-- **Les taux sont en dix-millièmes** (`1083` = 10,83 %), les multiplicateurs en
-  **millièmes** (`1000` = pas d'écart à l'axe).
+- **Les taux sont en dix-millièmes** (`1083` = 10,83 %). Les multiplicateurs
+  sont en **millièmes** pour `axes.pointe` et `jour_voyage`, en **centièmes**
+  dans `trains` (`100` = ne rien changer).
+- **Les couples s'indexent dans l'ordre de lecture de `cles`**, à partir de 0 :
+  `"8401:3.7,3.9;8403:2.7"` donne 0 = (8401, gares[3], gares[7]),
+  1 = (8401, gares[3], gares[9]), 2 = (8403, gares[2], gares[7]).
+- **Les listes de `trains` portent des écarts d'index**, pas des index : on
+  additionne en lisant, en partant de 0. `[0, 112, 3, 87]` = couple 0 → 1,12,
+  couple 3 → 0,87.
+- **Le taux d'un couple à l'horizon h** est le taux de l'axe, multiplié par
+  `m_ferme` / `m_rouvre` du couple (son tempérament), puis par la voix de la
+  bande qui contient h, si elle existe pour ce couple et ce sens. Pour la
+  question centrale, « ce train ouvre-t-il à J-29 » :
+  `axes[axe].rouvre[29] × m_rouvre[couple] × bandes.ouverture.rouvre[couple]`.
+- **Une bande absente de `trains.bandes` n'a pas gagné sa place** sur les
+  quatorze derniers relevés, tenus à l'écart de l'apprentissage : sa voix
+  prédisait moins bien que le seul tempérament du train, ou à moins d'un
+  demi-point près. La liste peut changer d'un tirage à l'autre ; le client lit
+  ce qui est là et ne suppose rien.
 - Les tableaux `ferme` / `rouvre` sont **indexés par horizon 1 à 30**, indice 0
   = horizon 1.
 - **L'horizon d'une transition est celui d'où elle part.** `rouvre[29]`
@@ -121,23 +143,23 @@ Conventions, à respecter à la lettre :
   (`IC SRO`, `AUTOCAR SNCF`, les cinq `OUIGO_*`), soit 22,5 % de l'archive.
 - `n_ouvert` et `n_ferme` accompagnent chaque taux : **c'est l'effectif qui
   décide de la bande affichée**, pas seulement le taux. Voir § 6.
-- `bandes` et `bandes_heritees` sont **informatifs** : le client n'en a pas
-  besoin, la table `trains` portant un multiplicateur unique par couple. Ils
-  disent seulement à quels horizons correspondent les libellés des compteurs,
+- `bandes` est **nécessaire** : il dit à quels horizons s'applique chaque voix
+  de `trains.bandes`. `bandes_heritees` reste informatif : il dit seulement à quels horizons correspondent les libellés des compteurs,
   l'archive en ayant connu deux découpages successifs (le second isole les trois
   horizons de vague, à partir du relevé du 25 août).
 
-### 3.2 Ce que v1 ne porte pas, et ce que v2 devra porter
+### 3.2 Ce que v2 porte, et ce qu'elle ne porte pas encore
 
-- **Pas de taux par couple à l'horizon 30.** La bande `ouverture` ne compte
-  qu'un passage par jour et par couple : sept observations au maximum. Le
-  pronostic d'ouverture d'un train donné se fait donc au niveau de l'axe, corrigé
-  du jour de voyage, plus le drapeau `sans_place_max`. C'est la limite la plus
-  contraignante du dispositif actuel, et elle se lèvera d'elle-même vers
-  **mi-octobre 2026** (≈ 56 observations par couple).
+- **Le taux d'ouverture par train.** Levée le 4 novembre 2026, avec trois
+  semaines de retard sur la mi-octobre prévue : sur 79 relevés, 11 072 couples
+  comptent au moins cinquante passages dans la bande `ouverture`. Sur les
+  quatorze derniers relevés tenus à l'écart, la voix de bande améliore la
+  log-perte de la réouverture à J-30 de 8 % sur le seul tempérament du train,
+  et de 28 % sur l'axe seul. « Ce train-là ouvre presque toujours » devient
+  prononçable.
 - **Pas de roster embarqué.** L'artefact ne dit pas quels trains roulent un jour
-  donné, seulement comment ils se comportent. La v1 va donc chercher le roster
-  au portail (§ 4.3). Une v2 pourra embarquer, pour les 12 133 couples déjà vus
+  donné, seulement comment ils se comportent. Le client va donc chercher le
+  roster au portail (§ 4.3). Une v3 pourra embarquer, pour les 12 133 couples déjà vus
   ouverts, leur heure de départ et leur axe (≈ 240 Ko) et supprimer cet appel.
 - **Pas d'ancienneté.** Les paliers 8-15 j et 16 j + sont vides. « Cette place
   tient d'habitude » n'est pas prononçable avant début octobre.
@@ -146,17 +168,17 @@ Conventions, à respecter à la lettre :
 
 Patron `Emissions`, à la lettre :
 
-1. `Bundle.main.url(forResource: "modele-v1", withExtension: "json")` — la
+1. `Bundle.main.url(forResource: "modele-v2", withExtension: "json")` — la
    version embarquée, qui suffit à tout faire hors ligne.
 2. Au lancement, en tâche détachée et sans faire attendre personne, un `GET`
-   sur `raw.githubusercontent.com/charlyppr/maxplor-tgvmax-archive/main/modele/modele-v1.json`,
+   sur `raw.githubusercontent.com/charlyppr/maxplor-tgvmax-archive/main/modele/modele-v2.json`,
    écrit dans `.cachesDirectory`. Session éphémère, `timeoutIntervalForRequest = 10`,
    `waitsForConnectivity = false`.
 3. À la lecture, le fichier de cache s'il existe et se décode, sinon l'embarqué.
    Le système peut vider les caches quand il veut : rien ne s'y perd.
 
 Le champ `fenetre.dernier_releve_compte` sert à dater le modèle dans
-l'interface (« modèle du 24 août, 7 relevés »). Il ne sert pas à périmer quoi
+l'interface (« modèle du 4 novembre, 79 relevés »). Il ne sert pas à périmer quoi
 que ce soit : un modèle de trois semaines vaut mieux que pas de modèle.
 
 ---
@@ -183,7 +205,7 @@ nonisolated struct OpeningModel: Decodable {
     let global: AxisRates
     let axes: [String: AxisRates]
     let travelDay: [String: DayFactor]
-    let trains: TrainTable
+    let trains: TrainTable   // tempérament par couple + voix par bande, § 3.1
 
     /// Les deux taux d'une case, en repliant ce qui manque. `horizon` est celui
     /// **d'où part** la transition.
@@ -210,9 +232,10 @@ func opensAtRelease(axe:pointe:travelWeekday:couple:) -> Double
 func holdsAfterRelease(days: Int = 3, …) -> Double
 
 /// « Et si je laisse courir ? » — la survie jusqu'au départ, chaîne complète.
-/// À n'afficher qu'en bande : la composition n'est validée que sur cinq à sept
-/// pas (1,45 point d'écart moyen sur 332 cohortes réelles). Sur vingt-neuf pas,
-/// elle ne le sera pas avant le 16 septembre 2026.
+/// À n'afficher qu'en bande : sur 962 cohortes réelles suivies de cinq à
+/// trente pas (tirage du 4 novembre 2026), la composition tombe à 5,7 points
+/// d'écart absolu moyen, sans biais d'ensemble, mais jusqu'à 55 points sur
+/// IC ARO.
 func survivesToDeparture(from horizon: Int, …) -> Double
 ```
 
@@ -384,7 +407,7 @@ donc un `FavoriteRoute` plus une date visée, rangé par `TripArchive` comme le
 reste — un quatrième fichier JSON à côté de `favorite-routes.json`, sur le même
 patron.
 
-### 4.7 `Maxplor/Resources/modele-v1.json`
+### 4.7 `Maxplor/Resources/modele-v2.json`
 
 Déposé tel quel. Le groupe `Maxplor` étant synchronisé au système de fichiers,
 il entre dans la cible sans modification du projet Xcode.
@@ -453,7 +476,7 @@ l'artefact s'affichent derrière un appui sur cette ligne.
 
 | ce qu'on aimerait dire | pourquoi c'est interdit aujourd'hui | quand |
 |---|---|---|
-| « **ce train-là** ouvre presque toujours » | 7 observations par couple au maximum à l'horizon 30. Un succès sur sept donne [2,6 % – 41 %] | **mi-octobre 2026** |
+| « **ce train-là** ouvre presque toujours » | levé le 4 novembre 2026 : 11 072 couples à cinquante passages ou plus dans la bande `ouverture` (modele-v2) | **permis** |
 | « cette place tient d'habitude » | paliers d'ancienneté 8-15 j et 16 j + entièrement vides | palier 16 j + le 2 septembre, exploitable début octobre |
 | « il reste 2 places » | la source est binaire | jamais |
 | « ça ouvre à 6 h » | un relevé par jour, à 04 h 24 UTC | jamais |
@@ -485,10 +508,11 @@ Cinq jalons, chacun livrable seul.
    miroir.
 4. **Le modèle.** `OpeningModel`, l'artefact embarqué, les bandes du § 6.
    Le rafraîchissement réseau vient après, sur le patron `Emissions`.
-5. **La reprise du modèle**, à mi-octobre, quand la bande `ouverture` portera
-   une cinquantaine d'observations par couple : le pronostic devient un
-   pronostic *de train* et non plus d'axe. C'est le jalon qui change la valeur
-   de la fonctionnalité, et il ne dépend que du temps qui passe.
+5. **La reprise du modèle** — faite le 4 novembre 2026 (modele-v2), trois
+   semaines après la mi-octobre prévue : le jalon « ne dépendait que du temps
+   qui passe », et rien ne le déclenchait. Le pronostic d'ouverture est
+   désormais un pronostic *de train*, et le modèle se retire seul chaque lundi.
+   Reste à le brancher : c'est le jalon 4.
 
 ---
 

@@ -1,0 +1,47 @@
+name: modele
+
+# Le modèle de la v1 a été tiré une fois, le 24 août, sur sept relevés, puis
+# plus jamais : la reprise prévue à la mi-octobre « ne dépendait que du temps
+# qui passe », et rien ne la déclenchait. Le recalcul est donc un rendez-vous,
+# comme la collecte.
+#
+# Chaque lundi, une heure après la collecte : les compteurs du jour sont déjà
+# versés. Une semaine suffit — sept relevés de plus déplacent peu des taux
+# appris sur des mois, et un artefact qui change tous les jours ne se relit pas.
+on:
+  schedule:
+    - cron: "30 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Le même groupe que la collecte : les deux poussent sur main, et une collecte
+# en retard ne doit pas se faire refuser son commit par un recalcul.
+concurrency:
+  group: collecte
+  cancel-in-progress: false
+
+jobs:
+  modele:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # La validation reconstitue l'apport de chaque relevé à partir de
+          # l'histoire git des compteurs : un clone superficiel la rendrait
+          # impossible.
+          fetch-depth: 0
+
+      - name: Tire le modèle
+        run: python3 modele.py
+
+      - name: Verse le modèle
+        run: |
+          git config user.name "modele"
+          git config user.email "modele@users.noreply.github.com"
+          git add modele/
+          git diff --staged --quiet && { echo "modèle inchangé"; exit 0; }
+          git commit -m "Retire le modèle sur les relevés du $(date -u +%F)"
+          git pull --rebase
+          git push

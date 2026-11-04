@@ -214,6 +214,18 @@ modèles ; la forme exacte (produit de taux, régression logistique, gradient
 boosting) reste ouverte et se décidera sur la calibration. C'est le substrat qui
 compte, et c'est lui qu'on ne peut pas reconstituer.
 
+**Le train dans sa bande.** `modele-v2` ajoute une couche : pour chaque couple
+(train, OD), une voix par bande, repliée sur le tempérament général du train.
+C'est elle qui rend « ce train-là ouvre presque toujours » prononçable : sur les
+quatorze derniers relevés tenus à l'écart, elle améliore la prévision de la
+réouverture à J-30 de 8 % sur le seul tempérament du train, et de 28 % sur
+l'axe. Une voix n'entre dans l'artefact que si elle gagne au moins un
+demi-point sur cette retenue ; les autres restent dehors.
+
+Le modèle se retire chaque lundi (`.github/workflows/modele.yml`), réserves
+comprises : elles se calculent sur ce que l'archive a vu, au lieu d'être écrites
+une fois pour toutes.
+
 **La validation prévue :** comparer une survie prédite par composition à une
 survie réellement observée sur une fenêtre complète, ce qui demande de garder en
 réserve plus d'un cycle de trente et un jours — d'où les soixante derniers états.
