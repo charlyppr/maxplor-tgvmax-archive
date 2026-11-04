@@ -14,11 +14,10 @@ jusqu'à 1. L'horizon 0 n'est pas observable : le train est parti.
 Trois choses distinguent ce script d'une simple division.
 
 **Le repli hiérarchique.** Un couple (train, OD) n'a pas assez d'observations
-pour un taux propre — sept jours d'archive, c'est au mieux cent passages par
-bande, et zéro pour la plupart. Chaque niveau hérite donc du niveau au-dessus
-par un lissage bêta-binomial dont la force est estimée sur les données
-elles-mêmes, et non posée à la main : (train, OD) hérite de son axe, l'axe
-hérite du global.
+pour un taux propre — la bande `ouverture` ne lui compte qu'un passage par jour.
+Chaque niveau hérite donc du niveau au-dessus par un lissage dont la force est
+estimée sur les données elles-mêmes, et non posée à la main : (train, OD) dans
+sa bande hérite du (train, OD), qui hérite de son axe, qui hérite du global.
 
 **La validation par retenue.** Les compteurs sont cumulés, mais le dépôt garde
 un commit par relevé : `git show` rend l'état des compteurs à chaque date, et
@@ -51,7 +50,7 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent
 CPT = RACINE / "compteurs"
 REFERENTIEL = RACINE / "referentiel.csv"
-SORTIE = RACINE / "modele" / "modele-v1.json"
+SORTIE = RACINE / "modele" / "modele-v2.json"
 
 CHAMPS = ("n_ouvert", "ferme", "n_ferme", "rouvre")
 CLES = {
@@ -113,8 +112,9 @@ def lire_table(nom: str) -> dict[tuple, list[int]]:
     """Somme toutes les tranches mensuelles d'une table.
 
     Les tranches existent pour qu'un modèle futur puisse pondérer le récent plus
-    fort que l'ancien. À sept jours d'archive il n'y a qu'une tranche, donc rien
-    à pondérer : on somme, et on laisse le point d'accroche en place.
+    fort que l'ancien. Tant que l'archive n'a pas vu une saison deux fois, une
+    pondération n'aurait rien de sûr à préférer : on somme, et on laisse le
+    point d'accroche en place.
     """
     total: dict[tuple, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
     for chemin in sorted((CPT / nom).glob("*.csv")):
@@ -400,11 +400,10 @@ class Modele:
             self.n_jour[j] = (int(no), int(kf_), int(nf), int(kr_))
 
         # ── couche 4 : le couple (train, OD) ─────────────────────────────────
-        # Sept jours ne suffisent pas pour un taux par couple ET par bande : la
-        # bande `ouverture` ne compte qu'un passage par jour, soit sept au
-        # total. On estime donc UN multiplicateur par couple et par sens,
-        # commun à toutes les bandes, en repliant la forme fine sur l'axe. Un
-        # seul nombre bien estimé vaut mieux que cinq nombres qui ne le sont pas.
+        # Un multiplicateur par couple et par sens, commun à toutes les bandes :
+        # le tempérament général du train, estimé sur tous ses passages. C'est
+        # la couche que les premiers relevés pouvaient porter ; la couche 5 la
+        # précise bande par bande quand l'archive le permet.
         self.m_train = {}
         self.n_train = {}
         att_t: dict[tuple, list[float]] = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0, 0, 0])
@@ -412,19 +411,8 @@ class Modele:
             axe = self.axes_couple.get((t, o, d))
             if axe is None:
                 continue
-            lo, hi = PORTEE_BANDE[bd]
-            # Une bande couvre plusieurs horizons ; on répartit son effectif sur
-            # eux au prorata du volume global, faute de connaître le détail.
-            # C'est cette répartition qui permet aux deux découpages de coexister
-            # sans se contredire : une ligne héritée et une ligne courante ne
-            # portent pas la même étendue, mais chacune est ramenée aux horizons
-            # qui sont réellement les siens avant d'être comparée à son axe.
-            poids_o = sum(self.global_n[h][0] for h in range(lo, hi + 1)) or 1
-            poids_f = sum(self.global_n[h][2] for h in range(lo, hi + 1)) or 1
-            e_f = sum(v[0] * self.global_n[h][0] / poids_o * self.a_ferme[(axe, h)]
-                      for h in range(lo, hi + 1))
-            e_r = sum(v[2] * self.global_n[h][2] / poids_f * self.a_rouvre[(axe, h)]
-                      for h in range(lo, hi + 1))
+            f_axe, r_axe = self.taux_bande(axe, bd)
+            e_f, e_r = v[0] * f_axe, v[2] * r_axe
             c = att_t[(t, o, d)]
             c[0] += v[1]
             c[1] += e_f
@@ -463,6 +451,70 @@ class Modele:
             mf, mr = self.m_train[cle]
             self.m_train[cle] = (mf * cf, mr * cr)
 
+        # ── couche 5 : le couple dans sa bande ───────────────────────────────
+        # La question de l'abonné n'est pas « ce train part-il tôt », mais « ce
+        # train ouvre-t-il à J-30 ». Un train qui libère tout son quota à
+        # l'ouverture et un autre qui le distille à J-11 peuvent avoir le même
+        # tempérament moyen : seule une voix par bande les sépare. Sept relevés
+        # ne la portaient pas (un passage par jour et par couple dans la bande
+        # `ouverture`) ; à la mi-octobre, la moitié des couples en comptent
+        # plus de cinquante.
+        #
+        # Le repli se fait sur la couche 4 et non sur 1 : un couple muet dans
+        # une bande garde le tempérament que ses autres bandes lui connaissent.
+        # Seules les bandes courantes ont une voix ; les libellés hérités ne
+        # recouvrent pas les mêmes horizons et continuent de nourrir la seule
+        # couche 4.
+        self.m_bande = {}
+        self.n_bande = {}
+        self.kb_ferme, self.kb_rouvre = {}, {}
+        par_bande: dict[str, list[tuple]] = defaultdict(list)
+        for (t, o, d, bd), v in tables["train"].items():
+            if bd not in BANDES:
+                continue
+            axe = self.axes_couple.get((t, o, d))
+            if axe is None:
+                continue
+            f_axe, r_axe = self.taux_bande(axe, bd)
+            mf, mr = self.m_train.get((t, o, d), (1.0, 1.0))
+            par_bande[bd].append(((t, o, d), v[1], v[0] * f_axe * mf,
+                                  v[3], v[2] * r_axe * mr, v[0], v[2]))
+        for bd, lignes in par_bande.items():
+            kf = force_gamma([(l[1], l[2]) for l in lignes])
+            kr = force_gamma([(l[3], l[4]) for l in lignes])
+            self.kb_ferme[bd], self.kb_rouvre[bd] = kf, kr
+            brut = {}
+            for cle, kof, ef, kor, er, no, nf in lignes:
+                brut[cle] = ((kof + kf) / (ef + kf) if ef > 0 else 1.0,
+                             (kor + kr) / (er + kr) if er > 0 else 1.0)
+                self.n_bande[(cle, bd)] = (no, kof, nf, kor)
+            # Même recentrage qu'à la couche 4, bande par bande : la couche
+            # redistribue entre trains, elle ne déplace pas le niveau de la bande.
+            sf = sum(l[2] * brut[l[0]][0] for l in lignes)
+            sr = sum(l[4] * brut[l[0]][1] for l in lignes)
+            cf = sum(l[1] for l in lignes) / sf if sf > 0 else 1.0
+            cr = sum(l[3] for l in lignes) / sr if sr > 0 else 1.0
+            for cle, (mf, mr) in brut.items():
+                self.m_bande[(cle, bd)] = (mf * cf, mr * cr)
+
+    def taux_bande(self, axe: str, bd: str) -> tuple[float, float]:
+        """Les taux de l'axe, moyennés sur les horizons que couvre une bande.
+
+        Une bande couvre plusieurs horizons ; on répartit son effectif sur eux
+        au prorata du volume global, faute de connaître le détail. C'est cette
+        répartition qui permet aux deux découpages de coexister sans se
+        contredire : une ligne héritée et une ligne courante ne portent pas la
+        même étendue, mais chacune est ramenée aux horizons qui sont réellement
+        les siens avant d'être comparée à son axe.
+        """
+        lo, hi = PORTEE_BANDE[bd]
+        po = sum(self.global_n[h][0] for h in range(lo, hi + 1)) or 1
+        pf = sum(self.global_n[h][2] for h in range(lo, hi + 1)) or 1
+        return (
+            sum(self.global_n[h][0] / po * self.a_ferme[(axe, h)] for h in range(lo, hi + 1)),
+            sum(self.global_n[h][2] / pf * self.a_rouvre[(axe, h)] for h in range(lo, hi + 1)),
+        )
+
     # ── prédiction ───────────────────────────────────────────────────────────
     def taux(self, axe, h, *, pointe=None, jour_voyage=None, couple=None):
         """Les deux taux d'une case, en repliant ce qui manque."""
@@ -478,6 +530,8 @@ class Modele:
             f, r = f * mf, r * mr
         if couple is not None:
             mf, mr = self.m_train.get(couple, (1.0, 1.0))
+            f, r = f * mf, r * mr
+            mf, mr = self.m_bande.get((couple, bande(h)), (1.0, 1.0))
             f, r = f * mf, r * mr
         return (min(max(f, 0.0), 0.999), min(max(r, 0.0), 0.999))
 
@@ -571,9 +625,9 @@ def composition(m: "Modele", tables: dict, pas_min: int = 5,
     La bonne question se pose donc à date de voyage fixée : on part du stock
     réellement observé au plus grand horizon de la cohorte, on propage, et on
     compare au stock observé au plus petit. Le prix de cette rigueur est la
-    portée : une archive de sept jours ne suit aucune date de voyage sur plus de
-    sept horizons. Ce qui se valide ici, ce sont cinq à sept pas — pas les
-    vingt-neuf dont une prévision d'ouverture aurait besoin.
+    portée : une date de voyage n'est suivie que sur les horizons que l'archive
+    a vus passer. Depuis le 16 septembre, les dates entrées par le bord de
+    fenêtre sont suivies sur toute la chaîne ; `pas_valides` dit jusqu'où.
     """
     par_cle: dict[tuple, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
     for (axe, dv, h), v in tables["calendrier"].items():
@@ -586,6 +640,7 @@ def composition(m: "Modele", tables: dict, pas_min: int = 5,
 
     par_axe: dict[str, list[float]] = defaultdict(list)
     tous: list[float] = []
+    longueurs: list[int] = []
     for (axe, dv), hs in suites.items():
         hs.sort(reverse=True)
         if len(hs) < pas_min or hs != list(range(hs[0], hs[0] - len(hs), -1)):
@@ -594,6 +649,7 @@ def composition(m: "Modele", tables: dict, pas_min: int = 5,
         if debut[0] + debut[2] < effectif_min:
             continue
         p = debut[0] / (debut[0] + debut[2])
+        longueurs.append(len(hs))
         j = date.fromisoformat(dv).weekday()
         for h in hs[:-1]:
             f, r = m.taux(axe, h, jour_voyage=j)
@@ -612,7 +668,7 @@ def composition(m: "Modele", tables: dict, pas_min: int = 5,
         }
 
     return {
-        "pas_valides": "5 à 7 — aucune date de voyage n'est suivie plus longtemps",
+        "pas_valides": f"{pas_min} à {max(longueurs, default=0)} par date de voyage",
         "ensemble": resume(tous) if tous else {},
         "par_axe": {a: resume(e) for a, e in sorted(par_axe.items()) if e},
     }
@@ -676,10 +732,16 @@ def valider(jours_retenus: int = 2) -> dict:
         "calibration": {s: calibration(ep[s]) for s in ep},
     }
 
-    # Épreuve 3 — la table par train : le lissage y gagne-t-il sa place ?
+    # Épreuve 3 — la table par train : le lissage y gagne-t-il sa place, et la
+    # voix par bande (couche 5) bat-elle le seul tempérament du train ?
     ep = {"ferme": [], "rouvre": []}
+    sans_bande = {"ferme": [], "rouvre": []}
     sans_train = {"ferme": [], "rouvre": []}
     brut = {"ferme": [], "rouvre": []}
+    # Les mêmes paires, rangées par bande : c'est bande par bande que la
+    # couche 5 entre ou non dans l'artefact.
+    par_bande: dict[str, dict[str, dict[str, list]]] = defaultdict(
+        lambda: {c: {"ferme": [], "rouvre": []} for c in ("modele", "sans_bande", "axe_seul")})
     app_train: dict[tuple, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
     for (t, o, d, bd), v in cumuler("train", appris).items():
         for i in range(4):
@@ -688,24 +750,36 @@ def valider(jours_retenus: int = 2) -> dict:
         axe = axes_couple.get((t, o, d))
         if axe is None:
             continue
-        lo, hi = PORTEE_BANDE[bd]
-        po = sum(m.global_n[h][0] for h in range(lo, hi + 1)) or 1
-        pf = sum(m.global_n[h][2] for h in range(lo, hi + 1)) or 1
-        f_axe = sum(m.global_n[h][0] / po * m.a_ferme[(axe, h)] for h in range(lo, hi + 1))
-        r_axe = sum(m.global_n[h][2] / pf * m.a_rouvre[(axe, h)] for h in range(lo, hi + 1))
+        f_axe, r_axe = m.taux_bande(axe, bd)
         mf, mr = m.m_train.get((t, o, d), (1.0, 1.0))
-        ep["ferme"].append((min(f_axe * mf, 0.999), v[1], v[0]))
-        ep["rouvre"].append((min(r_axe * mr, 0.999), v[3], v[2]))
+        bf, br = m.m_bande.get(((t, o, d), bd), (1.0, 1.0))
+        p = {
+            "modele": (min(f_axe * mf * bf, 0.999), min(r_axe * mr * br, 0.999)),
+            "sans_bande": (min(f_axe * mf, 0.999), min(r_axe * mr, 0.999)),
+            "axe_seul": (f_axe, r_axe),
+        }
+        ep["ferme"].append((p["modele"][0], v[1], v[0]))
+        ep["rouvre"].append((p["modele"][1], v[3], v[2]))
+        sans_bande["ferme"].append((p["sans_bande"][0], v[1], v[0]))
+        sans_bande["rouvre"].append((p["sans_bande"][1], v[3], v[2]))
         sans_train["ferme"].append((f_axe, v[1], v[0]))
         sans_train["rouvre"].append((r_axe, v[3], v[2]))
         a = app_train.get((t, o, d, bd), [0, 0, 0, 0])
         brut["ferme"].append((a[1] / a[0] if a[0] else f_axe, v[1], v[0]))
         brut["rouvre"].append((a[3] / a[2] if a[2] else r_axe, v[3], v[2]))
+        for c, (pf, pr) in p.items():
+            par_bande[bd][c]["ferme"].append((pf, v[1], v[0]))
+            par_bande[bd][c]["rouvre"].append((pr, v[3], v[2]))
     resultats["epreuves"]["train"] = {
         "modele": {s: scores(ep[s]) for s in ep},
+        "temoin_sans_bande": {s: scores(sans_bande[s]) for s in sans_bande},
         "temoin_axe_seul": {s: scores(sans_train[s]) for s in sans_train},
         "temoin_brut_non_lisse": {s: scores(brut[s]) for s in brut},
         "calibration": {s: calibration(ep[s]) for s in ep},
+    }
+    resultats["bandes"] = {
+        bd: {c: {s: scores(paires) for s, paires in sens.items()} for c, sens in blocs.items()}
+        for bd, blocs in sorted(par_bande.items()) if bd in BANDES
     }
 
     # ── dérive : le même modèle appliqué à chaque relevé, un par un ──────────
@@ -736,6 +810,62 @@ def q(x: float, ech: int = 10000) -> int:
     return int(round(x * ech))
 
 
+def voix_validees(validation: dict, gain_min: float = 0.005) -> list[tuple[str, str]]:
+    """Les (bande, sens) où la couche 5 bat la couche 4 sur la retenue.
+
+    Une voix qui ne prédit pas mieux que le tempérament du train n'est que du
+    poids dans le binaire, ou pire, du bruit qu'on présenterait comme un fait.
+    Et une voix qui gagne un millième de log-perte coûte autant d'octets qu'une
+    qui en gagne huit centièmes : sous le demi-point, elle reste dehors.
+    Sans validation, aucune n'entre : on ne publie pas ce qu'on n'a pas éprouvé.
+    """
+    voix = []
+    for bd, blocs in (validation or {}).get("bandes", {}).items():
+        for sens in ("ferme", "rouvre"):
+            avec, sans = blocs["modele"][sens], blocs["sans_bande"][sens]
+            if avec and sans and avec["logperte"] < sans["logperte"] * (1 - gain_min):
+                voix.append((bd, sens))
+    return voix
+
+
+def reserves(m: Modele, jours: list[str], validation: dict) -> list[str]:
+    """Ce que le modèle ne sait pas, écrit d'après ce qu'il a vu.
+
+    La v1 figeait ces phrases sur sept relevés ; elles mentaient dès le
+    huitième. Elles se calculent donc, comme le reste.
+    """
+    debut, fin = date.fromisoformat(jours[0]), date.fromisoformat(jours[-1])
+    out = [
+        f"{len(jours)} relevés comptés, du {debut:%d/%m/%Y} au {fin:%d/%m/%Y} : "
+        "les saisons que l'archive n'a pas encore traversées (Noël, hiver, ponts "
+        "de mai, été) ne sont pas apprises ; le jour de semaine du voyage l'est.",
+    ]
+    ouv = [n[2] for (_, bd), n in m.n_bande.items() if bd == "ouverture"]
+    if ouv:
+        assez = sum(n >= 50 for n in ouv)
+        out.append(
+            f"À l'ouverture, {assez} couples (train, OD) sur {len(ouv)} comptent "
+            "au moins cinquante passages : leur pronostic est celui du train. "
+            "Les autres empruntent davantage à leur axe."
+        )
+    ep = (validation or {}).get("epreuves", {}).get("train", {}).get("modele", {})
+    if ep.get("ferme") and ep.get("rouvre"):
+        n_ret = len(validation["retenus"])
+        out.append(
+            f"Sur les {n_ret} derniers relevés, tenus à l'écart de l'apprentissage, "
+            f"le modèle prévoit {abs(ep['ferme']['biais_relatif']):.0%} de fermetures "
+            f"{'de moins' if ep['ferme']['biais_relatif'] < 0 else 'de plus'} et "
+            f"{abs(ep['rouvre']['biais_relatif']):.0%} de réouvertures "
+            f"{'de moins' if ep['rouvre']['biais_relatif'] < 0 else 'de plus'} "
+            "qu'observé : afficher des bandes, jamais un pourcentage."
+        )
+    out.append(
+        "Le relevé fige l'état à 04 h 24 UTC ; une place ouverte et reprise dans "
+        "la journée est invisible. Le modèle sous-estime le brassage réel."
+    )
+    return out
+
+
 def construire_artefact(m: Modele, tables: dict, validation: dict,
                         compo: dict | None = None) -> dict:
     """Rend le modèle sous une forme qu'un client iOS lit sans rien recalculer.
@@ -748,7 +878,7 @@ def construire_artefact(m: Modele, tables: dict, validation: dict,
     """
     jours = [j for _, j in releves_git()]
     art = {
-        "version": "modele-v1",
+        "version": "modele-v2",
         "genere_le": datetime.now(timezone.utc).date().isoformat(),
         "source": "SNCF Voyageurs — jeu « tgvmax » (ODbL), archivé par maxplor-tgvmax-archive",
         "licence": "ODbL",
@@ -798,6 +928,13 @@ def construire_artefact(m: Modele, tables: dict, validation: dict,
     # On ne garde que ceux qui s'écartent visiblement de leur axe. Le seuil est
     # posé sur l'écart du multiplicateur lissé, donc après que le lissage a déjà
     # ramené vers 1 tout ce qui n'était que du bruit.
+    #
+    # Le fichier voyage dans l'app : à quatre-vingts relevés, les couples qui
+    # méritent leur place sont deux fois plus nombreux qu'à sept, et le format
+    # de la v1 dépassait la cible. Trois économies, aucune perte utile :
+    # les couples sont groupés par train (un numéro dessert plusieurs OD), les
+    # indices sont des écarts au précédent, et les multiplicateurs sont en
+    # centièmes — l'interface affiche des bandes, pas le troisième chiffre.
     SEUIL, MIN_OUVERT, MIN_FERME = 0.12, 20, 40
     gares, index_gare = [], {}
 
@@ -807,37 +944,69 @@ def construire_artefact(m: Modele, tables: dict, validation: dict,
             gares.append(code)
         return index_gare[code]
 
-    cles, sans_max, mf_creux, mr_creux = [], [], [], []
-    for cle, (mf, mr) in sorted(m.m_train.items()):
+    def creux(paires: list[tuple[int, float]]) -> list[int]:
+        """[écart d'index, multiplicateur en centièmes], à plat."""
+        out, prec = [], 0
+        for i, x in paires:
+            out += [i - prec, q(x, 100)]
+            prec = i
+        return out
+
+    voix = voix_validees(validation)
+    gardes: dict[tuple, int] = {}
+    sans_max, mf_p, mr_p = [], [], []
+    mb_p: dict[tuple[str, str], list] = {v: [] for v in voix}
+    for cle in sorted(m.m_train):
+        mf, mr = m.m_train[cle]
         no, _, nf, _ = m.n_train[cle]
         muet = no == 0
         garde_f = abs(mf - 1) >= SEUIL and no >= MIN_OUVERT
         garde_r = abs(mr - 1) >= SEUIL and nf >= MIN_FERME
-        if not (garde_f or garde_r or muet):
+        garde_b = []
+        for bd, sens in voix:
+            if (cle, bd) not in m.m_bande:
+                continue
+            b = m.m_bande[(cle, bd)][0 if sens == "ferme" else 1]
+            nb = m.n_bande[(cle, bd)][0 if sens == "ferme" else 2]
+            if abs(b - 1) >= SEUIL and nb >= (MIN_OUVERT if sens == "ferme" else MIN_FERME):
+                garde_b.append((bd, sens, b))
+        if not (garde_f or garde_r or muet or garde_b):
             continue
-        t, o, d = cle
-        i = len(cles)
-        cles.append(f"{t}.{ig(o)}.{ig(d)}")
+        i = gardes[cle] = len(gardes)
         if muet:
             sans_max.append(i)
         if garde_f:
-            mf_creux += [i, q(mf, 1000)]
+            mf_p.append((i, mf))
         if garde_r:
-            mr_creux += [i, q(mr, 1000)]
+            mr_p.append((i, mr))
+        for bd, sens, b in garde_b:
+            mb_p[(bd, sens)].append((i, b))
+
+    groupes: dict[str, list[str]] = {}
+    for t, o, d in gardes:
+        groupes.setdefault(t, []).append(f"{ig(o)}.{ig(d)}")
     art["trains"] = {
         "format": (
-            "`cles` : chaînes « train.iGareOrigine.iGareDestination » séparées "
-            "par ';', l'index renvoyant à `gares`. `sans_place_max` : indices des "
-            "couples dont aucune place Max n'a jamais été observée sur la fenêtre. "
-            "`m_ferme` / `m_rouvre` : paires [index, multiplicateur en millièmes] ; "
-            "tout couple absent vaut 1000, c'est-à-dire « prendre le taux de l'axe »."
+            "`cles` : groupes « train:iO.iD,iO.iD » séparés par ';', l'index "
+            "renvoyant à `gares` ; l'ordre de lecture des couples donne leur "
+            "index, à partir de 0. `sans_place_max` : indices des couples dont "
+            "aucune place Max n'a jamais été observée. `m_ferme` / `m_rouvre` "
+            "(couche 4, toutes bandes) et `bandes.<bande>.<sens>` (couche 5, en "
+            "plus de la couche 4) : listes à plat [écart d'index, multiplicateur "
+            "en centièmes, …], l'écart partant de 0 ; tout couple absent vaut 100, "
+            "c'est-à-dire « ne rien changer ». Seules figurent les bandes dont la "
+            "voix bat le seul tempérament du train sur la retenue."
         ),
         "seuils": {"ecart_min": SEUIL, "n_ouvert_min": MIN_OUVERT, "n_ferme_min": MIN_FERME},
         "gares": gares,
-        "cles": ";".join(cles),
-        "sans_place_max": sans_max,
-        "m_ferme": mf_creux,
-        "m_rouvre": mr_creux,
+        "cles": ";".join(f"{t}:{','.join(ods)}" for t, ods in groupes.items()),
+        "sans_place_max": [i - p for p, i in zip([0] + sans_max, sans_max)],
+        "m_ferme": creux(mf_p),
+        "m_rouvre": creux(mr_p),
+        "bandes": {
+            bd: {sens: creux(mb_p[(b, sens)]) for b, sens in voix if b == bd and mb_p[(b, sens)]}
+            for bd in sorted({b for b, s in voix if mb_p[(b, s)]})
+        },
         "couples_suivis": len(m.m_train),
     }
 
@@ -855,20 +1024,13 @@ def construire_artefact(m: Modele, tables: dict, validation: dict,
         "beta_axe_rouvre": {str(h): round(m.k_rouvre[h], 1) for h in range(1, 31)},
         "gamma_train_ferme": round(m.kt_ferme, 1),
         "gamma_train_rouvre": round(m.kt_rouvre, 1),
+        "gamma_bande_ferme": {bd: round(k, 1) for bd, k in sorted(m.kb_ferme.items())},
+        "gamma_bande_rouvre": {bd: round(k, 1) for bd, k in sorted(m.kb_rouvre.items())},
     }
     art["validation"] = _resume_validation(validation)
     if compo:
         art["composition"] = compo
-    art["reserves"] = [
-        "Sept relevés comptés : les taux par horizon sont solides, les effets de "
-        "calendrier ne le sont pas encore.",
-        "Le jour de semaine de la réservation n'est pas identifiable : avec sept "
-        "relevés consécutifs, chaque jour de semaine ne repose que sur une journée.",
-        "Aucun taux par couple (train, OD) n'est estimable à l'horizon 30 : la "
-        "bande `ouverture` ne compte qu'un passage par jour et par couple.",
-        "Le relevé fige l'état à 04 h 24 UTC ; une place ouverte et reprise dans "
-        "la journée est invisible. Le modèle sous-estime le brassage réel.",
-    ]
+    art["reserves"] = reserves(m, jours, validation)
     return art
 
 
@@ -890,6 +1052,13 @@ def _resume_validation(v: dict) -> dict:
                 for l in lignes]
             for s, lignes in ep["calibration"].items()
         }
+    out["bandes"] = {
+        bd: {c: {s: {"n": sc["n"], "logperte": round(sc["logperte"], 6),
+                      "biais_relatif": round(sc["biais_relatif"], 5)}
+                  for s, sc in sens.items() if sc}
+             for c, sens in blocs.items()}
+        for bd, blocs in v.get("bandes", {}).items()
+    }
     out["derive"] = [
         {"jour": d["jour"], "retenu": d["retenu"],
          "ferme_biais": round(d["ferme"]["biais_relatif"], 5),
@@ -924,6 +1093,19 @@ def afficher_validation(v: dict) -> None:
                 for l in lignes
             )
             print(f"   calibration ({sens}) : {detail}")
+    if v.get("bandes"):
+        print("\n── la couche 5, bande par bande (log-perte sur la retenue)")
+        for bd, blocs in v["bandes"].items():
+            for sens in ("ferme", "rouvre"):
+                sc = {c: blocs[c][sens] for c in blocs}
+                if not sc["modele"]:
+                    continue
+                gain = 1 - sc["modele"]["logperte"] / sc["sans_bande"]["logperte"]
+                print(f"   {bd:<15} {sens:<7} n={sc['modele']['n']:>8}  "
+                      f"axe={sc['axe_seul']['logperte']:.5f}  "
+                      f"train={sc['sans_bande']['logperte']:.5f}  "
+                      f"train×bande={sc['modele']['logperte']:.5f}  ({gain:+.1%})  "
+                      f"biais={sc['modele']['biais_relatif']:+.1%}")
     if v.get("derive"):
         print("\n── dérive jour par jour (modèle appris sur les seuls premiers relevés)")
         for d in v["derive"]:
@@ -938,7 +1120,9 @@ def afficher_validation(v: dict) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--sortie", type=Path, default=SORTIE)
-    ap.add_argument("--retenue", type=int, default=2,
+    # Deux semaines : assez pour que chaque jour de semaine soit retenu deux
+    # fois, et pour qu'une journée hors norme ne décide pas seule d'une voix.
+    ap.add_argument("--retenue", type=int, default=14,
                     help="nombre de relevés gardés hors de l'estimation")
     ap.add_argument("--sans-validation", action="store_true")
     args = ap.parse_args()
@@ -983,10 +1167,14 @@ def main() -> int:
     taille = args.sortie.stat().st_size
     tr = art["trains"]
     print(f"   {args.sortie} — {taille/1024:.0f} Ko")
-    print(f"   couples : {len(tr['cles'].split(';'))} retenus sur {len(m.m_train)} — "
+    n_couples = sum(len(g.split(":")[1].split(",")) for g in tr["cles"].split(";"))
+    print(f"   couples : {n_couples} retenus sur {len(m.m_train)} — "
           f"{len(tr['sans_place_max'])} sans place Max, "
           f"{len(tr['m_ferme'])//2} avec un multiplicateur de fermeture, "
           f"{len(tr['m_rouvre'])//2} de réouverture")
+    for bd, sens in tr["bandes"].items():
+        print(f"   voix de bande « {bd} » : "
+              + ", ".join(f"{len(v)//2} couples en {s}" for s, v in sens.items()))
     if taille > 500 * 1024:
         print("   ! au-dessus de la cible de 500 Ko", file=sys.stderr)
     return 0
