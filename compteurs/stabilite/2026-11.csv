@@ -18,6 +18,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 1,8-15j,jamais,0,0,260,1
 1,8-15j,quelques,1386,4,663,14
 1,8-15j,une,3828,7,0,0
+1,inconnue,inconnu,5793,173,4822,422
 2,16j+,agitee,68,0,16,0
 2,16j+,jamais,41,0,34354,1242
 2,16j+,quelques,278,0,291,12
@@ -37,6 +38,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 2,8-15j,jamais,0,0,200,36
 2,8-15j,quelques,1541,2,692,252
 2,8-15j,une,3955,18,0,0
+2,inconnue,inconnu,5529,153,5056,227
 3,16j+,agitee,63,0,39,0
 3,16j+,jamais,44,0,35804,1860
 3,16j+,quelques,248,3,307,42
@@ -56,6 +58,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 3,8-15j,jamais,0,0,191,18
 3,8-15j,quelques,1509,19,986,578
 3,8-15j,une,3588,30,0,0
+3,inconnue,inconnu,5402,142,5241,301
 4,16j+,agitee,55,0,18,0
 4,16j+,jamais,51,0,41305,6669
 4,16j+,quelques,260,0,507,229
@@ -74,6 +77,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 4,8-15j,jamais,0,0,256,86
 4,8-15j,quelques,1444,3,462,96
 4,8-15j,une,3333,10,0,0
+4,inconnue,inconnu,3615,3,7081,2172
 5,16j+,agitee,61,0,28,0
 5,16j+,jamais,45,0,41607,813
 5,16j+,quelques,278,1,307,12
@@ -92,6 +96,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 5,8-15j,jamais,0,0,234,4
 5,8-15j,quelques,810,11,196,0
 5,8-15j,une,1213,94,0,0
+5,inconnue,inconnu,2392,201,8825,212
 6,16j+,agitee,20,0,92,6
 6,16j+,jamais,52,0,43406,896
 6,16j+,quelques,255,0,357,28
@@ -110,6 +115,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 6,8-15j,jamais,0,0,210,0
 6,8-15j,quelques,521,0,160,0
 6,8-15j,une,843,11,0,0
+6,inconnue,inconnu,2667,119,6418,326
 7,16j+,agitee,25,0,92,0
 7,16j+,jamais,63,0,40941,866
 7,16j+,quelques,228,3,282,10
@@ -128,6 +134,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 7,8-15j,jamais,0,0,133,1
 7,8-15j,quelques,481,10,164,0
 7,8-15j,une,654,9,0,0
+7,inconnue,inconnu,1321,77,9815,60
 8,16j+,agitee,32,0,14,1
 8,16j+,jamais,60,0,43411,914
 8,16j+,quelques,206,55,272,30
@@ -146,6 +153,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 8,8-15j,jamais,3,0,85,0
 8,8-15j,quelques,371,0,77,12
 8,8-15j,une,571,5,0,0
+8,inconnue,inconnu,2496,46,8931,183
 9,16j+,agitee,6,0,16,0
 9,16j+,jamais,80,0,41658,1072
 9,16j+,quelques,134,0,303,4
@@ -163,6 +171,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 9,8-15j,jamais,0,0,1,0
 9,8-15j,quelques,417,0,60,13
 9,8-15j,une,540,2,0,0
+9,inconnue,inconnu,3664,61,7756,391
 10,16j+,agitee,6,0,0,0
 10,16j+,jamais,73,0,45503,910
 10,16j+,quelques,133,0,272,25
@@ -180,6 +189,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 10,8-15j,jamais,0,0,6,0
 10,8-15j,quelques,250,0,135,4
 10,8-15j,une,553,6,0,0
+10,inconnue,inconnu,3753,74,7734,106
 11,16j+,jamais,80,0,48510,1155
 11,16j+,quelques,39,0,390,40
 11,16j+,une,5254,0,0,0
@@ -196,6 +206,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 11,8-15j,jamais,0,0,7,0
 11,8-15j,quelques,258,0,179,17
 11,8-15j,une,584,0,0,0
+11,inconnue,inconnu,3213,223,8299,201
 12,16j+,jamais,60,0,52949,4377
 12,16j+,quelques,16,0,265,79
 12,16j+,une,6022,105,0,0
@@ -212,6 +223,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 12,8-15j,jamais,0,0,7,0
 12,8-15j,quelques,210,0,698,386
 12,8-15j,une,705,1,0,0
+12,inconnue,inconnu,919,19,10893,943
 13,16j+,jamais,59,0,53579,376
 13,16j+,quelques,0,0,125,1
 13,16j+,une,6492,31,0,0
@@ -228,6 +240,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 13,8-15j,jamais,0,0,7,0
 13,8-15j,quelques,175,0,781,87
 13,8-15j,une,654,3,7,7
+13,inconnue,inconnu,1147,39,6925,103
 14,16j+,jamais,72,0,53862,524
 14,16j+,une,6993,74,0,0
 14,1j,agitee,64,27,170,30
@@ -243,6 +256,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 14,8-15j,jamais,3,0,86,0
 14,8-15j,quelques,123,15,591,20
 14,8-15j,une,904,9,7,0
+14,inconnue,inconnu,654,9,9186,65
 15,16j+,jamais,71,0,57187,341
 15,1j,agitee,212,75,274,72
 15,1j,quelques,61,20,125,51
@@ -258,6 +272,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 15,8-15j,jamais,0,0,84,0
 15,8-15j,quelques,107,10,423,14
 15,8-15j,une,7735,67,7,0
+15,inconnue,inconnu,1061,91,9415,73
 16,1j,agitee,101,87,206,70
 16,1j,quelques,205,159,103,21
 16,1j,une,235,33,13,0
@@ -272,6 +287,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 16,8-15j,jamais,90,0,53480,190
 16,8-15j,quelques,79,6,491,25
 16,8-15j,une,8168,100,7,0
+16,inconnue,inconnu,1532,59,8920,74
 17,1j,agitee,60,27,268,14
 17,1j,quelques,179,96,164,6
 17,1j,une,163,35,0,0
@@ -286,6 +302,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 17,8-15j,jamais,96,13,53047,191
 17,8-15j,quelques,50,0,478,50
 17,8-15j,une,7301,25,7,0
+17,inconnue,inconnu,1292,67,9210,89
 18,1j,agitee,60,42,188,51
 18,1j,jamais,1,0,0,0
 18,1j,quelques,222,69,146,55
@@ -301,6 +318,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 18,8-15j,jamais,83,0,53578,215
 18,8-15j,quelques,48,5,474,113
 18,8-15j,une,6050,140,7,0
+18,inconnue,inconnu,1066,30,9599,37
 19,1j,agitee,122,27,156,7
 19,1j,quelques,117,30,202,91
 19,1j,une,257,47,0,0
@@ -316,6 +334,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 19,8-15j,jamais,77,0,53361,136
 19,8-15j,quelques,36,0,413,108
 19,8-15j,une,5480,95,0,0
+19,inconnue,inconnu,755,46,11484,128
 20,1j,agitee,27,3,90,11
 20,1j,quelques,87,54,190,40
 20,1j,une,307,63,3,3
@@ -329,6 +348,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 20,8-15j,jamais,51,0,53099,286
 20,8-15j,quelques,0,0,307,21
 20,8-15j,une,4990,63,0,0
+20,inconnue,inconnu,1961,188,8954,46
 21,1j,agitee,55,34,91,16
 21,1j,quelques,111,37,151,44
 21,1j,une,131,37,1,0
@@ -342,6 +362,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 21,8-15j,jamais,54,3,52228,299
 21,8-15j,quelques,0,0,136,0
 21,8-15j,une,5026,92,0,0
+21,inconnue,inconnu,829,30,10386,45
 22,1j,agitee,117,40,95,29
 22,1j,quelques,122,20,170,18
 22,1j,une,140,12,0,0
@@ -354,6 +375,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 22,4-7j,une,520,13,0,0
 22,8-15j,jamais,51,0,56836,115
 22,8-15j,une,4620,169,0,0
+22,inconnue,inconnu,1160,137,10326,50
 23,1j,agitee,6,6,212,102
 23,1j,quelques,112,38,291,105
 23,1j,une,183,14,7,0
@@ -364,6 +386,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 23,4-7j,quelques,66,1,573,16
 23,4-7j,une,6513,338,0,0
 23,8-15j,jamais,80,3,56534,191
+23,inconnue,inconnu,2241,21,9059,68
 24,1j,agitee,4,4,119,3
 24,1j,quelques,146,82,187,49
 24,1j,une,131,33,13,7
@@ -373,6 +396,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 24,4-7j,jamais,87,7,57615,214
 24,4-7j,quelques,19,0,337,58
 24,4-7j,une,6338,184,0,0
+24,inconnue,inconnu,2209,35,9143,90
 25,1j,agitee,0,0,35,0
 25,1j,quelques,142,23,269,58
 25,1j,une,193,42,0,0
@@ -382,6 +406,7 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 25,4-7j,jamais,87,13,58778,152
 25,4-7j,quelques,0,0,245,27
 25,4-7j,une,6178,180,0,0
+25,inconnue,inconnu,1745,132,9775,57
 26,1j,agitee,0,0,31,0
 26,1j,quelques,151,10,559,111
 26,1j,une,329,91,0,0
@@ -389,17 +414,21 @@ horizon,anciennete,bascules,n_ouvert,ferme,n_ferme,rouvre
 26,2-3j,une,418,42,0,0
 26,4-7j,jamais,94,0,58685,186
 26,4-7j,une,7083,174,0,0
+26,inconnue,inconnu,962,98,11484,75
 27,1j,quelques,123,28,323,120
 27,1j,une,421,213,0,0
 27,2-3j,jamais,0,0,2,0
 27,2-3j,quelques,0,0,325,31
 27,2-3j,une,8829,400,0,0
 27,4-7j,jamais,87,0,58402,424
+27,inconnue,inconnu,1477,61,8199,159
 28,1j,quelques,7,7,334,134
 28,1j,une,446,69,0,0
 28,2-3j,jamais,87,0,57517,501
 28,2-3j,une,9403,282,0,0
+28,inconnue,inconnu,631,4,10304,21
 29,1j,jamais,0,0,2,0
 29,1j,une,8727,311,7,7
 29,2-3j,jamais,77,0,60512,491
-30,1j,jamais,113,14,67668,9484
+29,inconnue,inconnu,1209,23,10436,10
+30,1j,jamais,126,14,79091,11419
